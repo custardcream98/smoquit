@@ -33,7 +33,7 @@ const CampaignGiveupModal = ({ startsAt }) => {
         포기하기
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>정말 포기할거에요? 😢</Modal.Title>
         </Modal.Header>
