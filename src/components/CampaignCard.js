@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import {
-  query,
-  where,
-  collection,
-  updateDoc,
-  getDocs,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import PropTypes from "prop-types";
+import { Button, Card, Badge, ListGroup } from "react-bootstrap";
 import { fireStore } from "firebaseSetup";
-import { DOC_CAMPAIGNS } from "firebaseSetup/docNames";
+import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
+import timeDelta2str from "core/timeDelta2Str";
+import styles from "./CampaignCard.module.css";
 
 const CampaignCard = ({ name, startsAt }) => {
-  const profile = useSelector((state) => state.profile);
   const [timer, setTimer] = useState(0);
+  const profile = useSelector((state) => state.profile);
 
   useEffect(() => {
     const countUp = setInterval(() => {
@@ -26,53 +23,57 @@ const CampaignCard = ({ name, startsAt }) => {
   const date2str = (date) =>
     `${date.getFullYear()}년 ${
       date.getMonth() + 1
-    }월 ${date.getDay()}일 ${date.getHours()}:${date.getMinutes()}`;
-  const timeDelta2str = (delta) => {
-    const year = Math.floor(delta / 31536000000);
-    delta %= 31536000000;
-    const month = Math.floor(delta / 2592000000);
-    delta %= 2592000000;
-    const day = Math.floor(delta / 86400000);
-    delta %= 86400000;
-    const hour = Math.floor(delta / 3600000);
-    delta %= 3600000;
-    const minute = Math.floor(delta / 60000);
-    delta %= 60000;
-    const secound = Math.floor(delta / 1000);
-
-    return `${year ? year + "년 " : ""}${month ? month + "개월 " : ""}${
-      day ? day + "일 " : ""
-    }${hour ? hour + "시간 " : ""}${minute ? minute + "분 " : ""}${secound}초`;
-  };
+    }월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`;
 
   const onClick = async () => {
-    const docPeriodRef = collection(fireStore, DOC_CAMPAIGNS);
-    const q = query(docPeriodRef, where("uid", "==", profile.uid));
-    const querySnapshot = await getDocs(q);
-    let userCampaignRef = null;
-    console.log(querySnapshot);
+    const campaignDocRef = doc(
+      fireStore,
+      DOC_CAMPAIGNS_BY_USER,
+      profile.uid,
+      DOC_CAMPAIGNS,
+      `${startsAt.getTime()}`
+    );
+    // const q = query(docPeriodRef, where("uid", "==", profile.uid));
+    // const querySnapshot = await getDocs(q);
+    // let userCampaignRef = null;
+    // console.log(querySnapshot);
 
-    querySnapshot.forEach((doc) => {
-      if (
-        doc.data().name === name &&
-        doc.data().startsAt === startsAt.getTime()
-      ) {
-        userCampaignRef = doc.ref;
-      }
-    });
+    // querySnapshot.forEach((doc) => {
+    //   if (
+    //     doc.data().name === name &&
+    //     doc.data().startsAt === startsAt.getTime()
+    //   ) {
+    //     userCampaignRef = doc.ref;
+    //   }
+    // });
 
-    await updateDoc(userCampaignRef, {
+    await updateDoc(campaignDocRef, {
       endsAt: Date.now(),
     });
   };
 
+  const howManyCig = (delta) => {};
+
   return (
     <div>
-      <h4>{name}</h4>
-      <span>{date2str(startsAt) + " 부터"}</span>
-      <h1>{timeDelta2str(timer)}만큼 #노담 이였어요</h1>
-      <h3></h3>
-      <button onClick={onClick}>포기하기</button>
+      <Card>
+        <Card.Header>{name}</Card.Header>
+        <Card.Body>
+          <Card.Subtitle as="h6" className={styles.Subtitle}>
+            {date2str(startsAt) + " 부터"}
+          </Card.Subtitle>
+          <Card.Title as="h2">
+            <Badge bg="dark">{timeDelta2str(timer)}</Badge>
+          </Card.Title>
+          <Card.Text>동안 {profile.displayName}님은...</Card.Text>
+        </Card.Body>
+        <ListGroup>
+          <ListGroup.Item></ListGroup.Item>
+        </ListGroup>
+      </Card>
+      <Button onClick={onClick} variant="outline-danger" size="sm">
+        포기하기
+      </Button>
     </div>
   );
 };

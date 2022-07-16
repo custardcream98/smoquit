@@ -5,7 +5,9 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { fireAuth } from "firebaseSetup";
+import { setDoc, doc } from "firebase/firestore";
+import { fireAuth, fireStore } from "firebaseSetup";
+import { DOC_PROFILE } from "firebaseSetup/docNames";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -28,7 +30,14 @@ const Auth = () => {
     event.preventDefault();
     try {
       if (newAccount) {
-        await createUserWithEmailAndPassword(fireAuth, email, password);
+        const createdUser = await createUserWithEmailAndPassword(
+          fireAuth,
+          email,
+          password
+        );
+        await setDoc(doc(fireStore, DOC_PROFILE, createdUser.user.uid), {
+          cigPerDay: 20,
+        });
       } else {
         await signInWithEmailAndPassword(fireAuth, email, password);
       }
@@ -44,8 +53,14 @@ const Auth = () => {
     if (event.target.name === "google") {
       provider = new GoogleAuthProvider();
     }
-
-    await signInWithPopup(fireAuth, provider);
+    try {
+      const createdUser = await signInWithPopup(fireAuth, provider);
+      await setDoc(doc(fireStore, DOC_PROFILE, createdUser.user.uid), {
+        cigPerDay: 20,
+      });
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (

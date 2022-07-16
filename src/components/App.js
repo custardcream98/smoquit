@@ -1,7 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { doc, getDoc } from "firebase/firestore";
 import { setProfile } from "store/actions/profileAction";
-import { fireAuth } from "firebaseSetup";
+import { fireAuth, fireStore } from "firebaseSetup";
+import { DOC_PROFILE } from "firebaseSetup/docNames";
 import AppRouter from "routes";
 
 const App = () => {
@@ -10,10 +12,16 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fireAuth.onAuthStateChanged((user) => {
+    fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
         setIsLoggedIn(true);
-        dispatch(setProfile(user));
+        if (!user.displayName) {
+          user.displayName = user.email.split("@")[0];
+        }
+        const cigPerDay = (
+          await getDoc(doc(fireStore, DOC_PROFILE, user.uid))
+        ).data().cigPerDay;
+        dispatch(setProfile({ ...user, cigPerDay }));
       } else {
         setIsLoggedIn(false);
       }
@@ -23,7 +31,7 @@ const App = () => {
   return (
     <>
       {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "로딩중"}
-      <footer>&copy; Smoquit {new Date().getFullYear()}</footer>
+      {/* <footer>&copy; Smoquit {new Date().getFullYear()}</footer> */}
     </>
   );
 };

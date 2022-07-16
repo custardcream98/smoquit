@@ -35,3 +35,22 @@
 ### 금연 포기
 
 ![금연포기](./img/endCampaign.gif)
+
+---
+
+## NoSQL Firestore DB Structure
+
+`💼 Collection` `📙 Doc` `📄 Field`
+
+- 💼 **campaigns_by_user**
+
+  - 📙 **uid**: 유저별로 발급되는 uid
+    - 💼 **campaigns**
+      - 📙 **startsAt**: 각 캠페인(금연)의 시작 시각을 id로
+        - 📄 **name**: 캠페인 이름(간단한 메모)
+        - 📄 **startsAt**: 캠페인 시작 시각(int, Timestamp in millisecounds)
+        - 📄 **endsAt**: 캠페인 종료 시각, 각 캠페인 포기시에 set(int, Timestamp in millisecounds)
+
+- 💼 **profile**: user에 추가로 저장해야 하는 정보
+  - 📙 **uid**
+    - 📄 **sigPerDay**: 하루에 몇개피 펴왔는지에 대한 정보, 메인 화면에서 필요한 정보 계산에 사용

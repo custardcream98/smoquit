@@ -9,29 +9,33 @@ import {
 import Auth from "routes/Auth";
 import Home from "routes/Home";
 import Profile from "routes/Profile";
-import Campaign from "routes/Campaign";
 import CreateCampaign from "routes/CreateCampaign";
+import LeaderBoard from "routes/LeaderBoard";
 import Navigation from "components/Navigation";
+import styles from "./index.module.css";
 
 const AppRouter = ({ isLoggedIn }) => {
   return (
     <Router>
       {isLoggedIn && <Navigation />}
-      <Routes>
-        {isLoggedIn ? (
-          <>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/campaign" element={<Campaign />} />
-            <Route path="/campaign/create" element={<CreateCampaign />} />
-          </>
-        ) : (
-          <>
-            <Route path="/" exact element={<Auth />} />
-            <Route path="/*" element={<Navigate replace to="/" />} />
-          </>
-        )}
-      </Routes>
+      <div className={styles.Router}>
+        <Routes>
+          {isLoggedIn ? (
+            <>
+              <Route path="/" element={<Home />} />
+              <Route path="/leaderboard" element={<LeaderBoard />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/create" element={<CreateCampaign />} />
+              <Route path="/*" element={<Navigate replace to="/" />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" exact element={<Auth />} />
+              <Route path="/*" element={<Navigate replace to="/" />} />
+            </>
+          )}
+        </Routes>
+      </div>
     </Router>
   );
 };

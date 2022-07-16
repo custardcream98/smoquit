@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { collection, addDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { Form, Button, Spinner } from "react-bootstrap";
+import { setDoc, doc } from "firebase/firestore";
+import { useNavigate, Link } from "react-router-dom";
 import { fireStore } from "firebaseSetup";
-import { DOC_CAMPAIGNS } from "firebaseSetup/docNames";
+import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
 
 const CreateCampaign = () => {
   const profile = useSelector((state) => state.profile);
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const onChange = (event) => {
     const {
@@ -21,15 +23,24 @@ const CreateCampaign = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitted(true);
     let newCampaign = {
-      uid: profile.uid,
       name: name,
       startsAt: Date.now(),
       endsAt: 0,
     };
 
     try {
-      await addDoc(collection(fireStore, DOC_CAMPAIGNS), newCampaign);
+      await setDoc(
+        doc(
+          fireStore,
+          DOC_CAMPAIGNS_BY_USER,
+          profile.uid,
+          DOC_CAMPAIGNS,
+          `${newCampaign.startsAt}`
+        ),
+        newCampaign
+      );
 
       navigate("/", { replace: true });
     } catch (error) {
@@ -38,17 +49,45 @@ const CreateCampaign = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        name="name"
-        type="text"
-        placeholder="목표를 적어봐요 🗓️"
-        required
-        value={name}
-        onChange={onChange}
-      />
-      <input type="submit" name="submit" value="나도 이제 #노담인! 😉" />
-    </form>
+    <>
+      <Form onSubmit={isSubmitted ? null : onSubmit}>
+        <Form.Control
+          name="name"
+          type="text"
+          placeholder="금연해서 슈퍼카 지르기 🏎️"
+          required
+          value={name}
+          onChange={onChange}
+        />
+        <Button
+          type="submit"
+          name="submit"
+          variant="primary"
+          disabled={isSubmitted || name === ""}
+        >
+          {isSubmitted ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              <span className="visually-hidden">Loading...</span>
+              <span>금연 가즈아</span>
+            </>
+          ) : name === "" ? (
+            <span>목표를 적어주세요 🗓️</span>
+          ) : (
+            <span>나도 이제 #노담인! 😉</span>
+          )}
+        </Button>
+      </Form>
+      <Button as={Link} to="/" variant="outline-primary">
+        돌아가기
+      </Button>
+    </>
   );
 };
 
