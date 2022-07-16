@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Card, Badge, ListGroup } from "react-bootstrap";
+import { Card, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import timeDelta2str from "core/timeDelta2Str";
+import * as constants from "core/constants";
 import style from "./CampaignHistory.module.css";
 
 const CampaignHistory = ({ campaigns }) => {
@@ -42,14 +43,20 @@ const CampaignHistory = ({ campaigns }) => {
   };
 
   // 한 개피당 평균 15분 소요 (이동시간 고려)
-  const calCigTime = (cigNum) => setAggCigTime(900000 * cigNum);
+  const calCigTime = (cigNum) => setAggCigTime(constants.TIME_PER_CIG * cigNum);
 
   // 담배 안피운 개피 수 가치 + 흡연 시간만큼의 최저시급
   const calMoney = (cigNum, cigTime) =>
-    setAggMoney((225 * cigNum + 0.00254444 * cigTime).toFixed(2));
+    setAggMoney(
+      (
+        constants.COST_PER_CIG * cigNum +
+        constants.COST_PER_CIGTIME * cigTime
+      ).toFixed(2)
+    );
 
   // 한 개피당 5분의 수명단축
-  const calLifespan = (cigNum) => setLifespan(300000 * cigNum);
+  const calLifespan = (cigNum) =>
+    setLifespan(constants.LIFESPAN_PER_CIG * cigNum);
 
   return (
     <Card className={style.CampaignHistory}>
@@ -65,10 +72,10 @@ const CampaignHistory = ({ campaigns }) => {
           🚭 <mark>{aggCig}개피의 담배</mark>를 참았고
         </ListGroup.Item>
         <ListGroup.Item>
-          ⏱️ <mark>{timeDelta2str(aggCigTime)}</mark>를 벌었고
+          ⏱️ <mark>{timeDelta2str(aggCigTime)}</mark>를 아꼈고
         </ListGroup.Item>
         <ListGroup.Item>
-          💵 <mark>{aggMoney}원</mark>을 아꼈고
+          💵 <mark>{aggMoney}원</mark>을 벌었고
         </ListGroup.Item>
         <ListGroup.Item>
           😁 <mark>{timeDelta2str(lifespan)}</mark>만큼 더 살 수 있게 됐어요

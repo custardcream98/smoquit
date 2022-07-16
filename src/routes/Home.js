@@ -48,6 +48,7 @@ const Home = () => {
           <CampaignCard
             key={campaigns[0].id}
             name={campaigns[0].data().name}
+            attempCount={campaigns.length + 1}
             startsAt={new Date(campaigns[0].data().startsAt)}
           />
         ) : (

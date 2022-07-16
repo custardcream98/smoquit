@@ -1,3 +1,9 @@
-.Subtitle {
-    margin-bottom: 0.5rem;
+.AttempCount {
+    /* margin-bottom: 0.05rem; */
+    font-weight: 300;
+    font-size: calc(0.5rem + 0.9vw);
+}
+
+.Card {
+    margin-bottom: 2rem;
 }

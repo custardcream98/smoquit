@@ -5,6 +5,7 @@ import { setDoc, doc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { fireStore } from "firebaseSetup";
 import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
+import styles from "./CreateCampaign.module.css";
 
 const CreateCampaign = () => {
   const profile = useSelector((state) => state.profile);
@@ -59,34 +60,36 @@ const CreateCampaign = () => {
           value={name}
           onChange={onChange}
         />
-        <Button
-          type="submit"
-          name="submit"
-          variant="primary"
-          disabled={isSubmitted || name === ""}
-        >
-          {isSubmitted ? (
-            <>
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-              <span className="visually-hidden">Loading...</span>
-              <span>금연 가즈아</span>
-            </>
-          ) : name === "" ? (
-            <span>목표를 적어주세요 🗓️</span>
-          ) : (
-            <span>나도 이제 #노담인! 😉</span>
-          )}
-        </Button>
+        <div className={`d-grid gap-2 ${styles.Buttonstyle}`}>
+          <Button
+            type="submit"
+            name="submit"
+            variant="primary"
+            disabled={isSubmitted || name === ""}
+          >
+            {isSubmitted ? (
+              <>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                <span className="visually-hidden">Loading...</span>
+                <span>금연 가즈아</span>
+              </>
+            ) : name === "" ? (
+              <span>목표를 적어주세요 🗓️</span>
+            ) : (
+              <span>나도 이제 #노담! 😉</span>
+            )}
+          </Button>
+          <Button as={Link} to="/" variant="outline-primary">
+            돌아가기
+          </Button>
+        </div>
       </Form>
-      <Button as={Link} to="/" variant="outline-primary">
-        돌아가기
-      </Button>
     </>
   );
 };
