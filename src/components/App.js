@@ -13,7 +13,7 @@ const App = () => {
     fireAuth.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
-        dispatch(setProfile(user.providerData[0]));
+        dispatch(setProfile(user));
       } else {
         setIsLoggedIn(false);
       }
@@ -23,7 +23,7 @@ const App = () => {
   return (
     <>
       {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "로딩중"}
-      <footer>&copy; 🚭 Smoquit {new Date().getFullYear()}</footer>
+      <footer>&copy; Smoquit {new Date().getFullYear()}</footer>
     </>
   );
 };

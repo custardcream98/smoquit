@@ -1,53 +1,64 @@
-import React, { useSelector, useEffect, useState } from "react-redux";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
 import { fireStore } from "firebaseSetup";
-import { DOC_QUITTED_PERIOD } from "firebaseSetup/docNames";
+import { DOC_CAMPAIGNS } from "firebaseSetup/docNames";
 import CampaignCard from "components/CampaignCard";
 
 const Campaign = () => {
   const profile = useSelector((state) => state.profile);
   const [campaigns, setCampaigns] = useState([]);
 
-  // await addDoc(collection(fireStore, DOC_QUITTED_PERIOD), {
-  //   userId: createdUser.user.uid,
-  //   campaigns:[{name: "내 첫 금연", }]
-  //   startsAt: Date.now(),
-  //   endsAt: 0,
-  // });
+  const loadCampaigns = async () => {
+    const campaignsRef = collection(fireStore, DOC_CAMPAIGNS);
+    const q = query(campaignsRef, where("uid", "==", profile.uid));
 
-  const loadQuittedPeriodDocs = async () => {
-    const quittedRef = collection(fireStore, DOC_QUITTED_PERIOD);
-    const q = query(quittedRef, where("uid", "==", profile.uid));
-    const querySnapshot = await getDocs(q);
-    const userCampaign = querySnapshot.docs[0];
-    let campaignsArr = userCampaign.data().campaigns.map((campaign) => ({
-      id: `${profile.uid}${campaign.startsAt}`,
-      startsAt: new Date(campaign.startsAt),
-      endsAt: new Date(campaign.endsAt),
-    }));
-    campaignsArr.sort((a, b) => b.startsAt.getTime() - a.startsAt.getTime());
-    setCampaigns(campaignsArr);
+    onSnapshot(q, (querySnapshot) => {
+      const campaignsArr = [];
+      querySnapshot.forEach((doc) => {
+        campaignsArr.push(doc.data());
+      });
+      campaignsArr.sort((a, b) => b.startsAt - a.startsAt);
+      setCampaigns(campaignsArr);
+    });
   };
 
   useEffect(() => {
-    loadQuittedPeriodDocs();
+    loadCampaigns();
   }, []);
+
+  const createCampaignBtn = (
+    <>
+      <h3>금연 시작해보는게 어때요?</h3>
+      <Link to="/campaign/create">#노담 시작하기</Link>
+    </>
+  );
 
   return (
     <div>
-      {campaigns.length === 0 ? (
-        <h3>금연 시작해보는게 어때요?</h3>
+      {campaigns.length !== 0 ? (
+        campaigns[0].endsAt === 0 ? (
+          <h3>
+            {
+              <CampaignCard
+                key={`${campaigns[0].uid}${campaigns[0].startsAt}`}
+                name={campaigns[0].name}
+                startsAt={new Date(campaigns[0].startsAt)}
+              />
+            }
+          </h3>
+        ) : (
+          createCampaignBtn
+        )
       ) : (
-        <h3>
-          {campaigns.map((campaign) => (
-            <CampaignCard
-              key={campaign.id}
-              name={campaign.name}
-              startsAt={campaign.startsAt}
-              endsAt={campaign.endsAt}
-            />
-          ))}
-        </h3>
+        createCampaignBtn
       )}
     </div>
   );

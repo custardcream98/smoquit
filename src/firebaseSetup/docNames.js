@@ -1,1 +1,1 @@
-export const DOC_QUITTED_PERIOD = "quitted_period";
+export const DOC_CAMPAIGNS = "campaigns";

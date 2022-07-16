@@ -27,19 +27,10 @@ const Auth = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      let createdUser;
       if (newAccount) {
-        createdUser = await createUserWithEmailAndPassword(
-          fireAuth,
-          email,
-          password
-        );
+        await createUserWithEmailAndPassword(fireAuth, email, password);
       } else {
-        createdUser = await signInWithEmailAndPassword(
-          fireAuth,
-          email,
-          password
-        );
+        await signInWithEmailAndPassword(fireAuth, email, password);
       }
     } catch (error) {
       setError(error.message);
