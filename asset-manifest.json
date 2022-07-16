@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/smoquit/static/js/main.0abeedb7.js",
+    "index.html": "/smoquit/index.html",
+    "main.0abeedb7.js.map": "/smoquit/static/js/main.0abeedb7.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.0abeedb7.js"
+  ]
+}
