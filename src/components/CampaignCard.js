@@ -58,36 +58,36 @@ const CampaignCard = ({ name, attempCount, startsAt }) => {
           </Badge>
         </h2>
       </div>
-      <Card className={styles.Card}>
+      <Card>
         <Card.Body>
           <Card.Title as="h1">{timeDelta2str(timer)}</Card.Title>
           <Card.Text>동안 {profile.displayName}님은👇</Card.Text>
         </Card.Body>
-        <ListGroup>
-          <ListGroup.Item>
-            🚭 <mark>{cigNum.toFixed(2)}개피의 담배</mark>를 참았고
-          </ListGroup.Item>
-          <ListGroup.Item>
-            ⏱️ <mark>{timeDelta2str(cigNum * constants.TIME_PER_CIG)}</mark>를
-            아꼈고
-          </ListGroup.Item>
-          <ListGroup.Item>
-            💵{" "}
-            <mark>
-              {(
-                cigNum * constants.COST_PER_CIG +
-                cigNum * constants.TIME_PER_CIG * constants.COST_PER_CIGTIME
-              ).toFixed(2)}
-              원
-            </mark>
-            을 벌었고
-          </ListGroup.Item>
-          <ListGroup.Item>
-            😁 <mark>{timeDelta2str(cigNum * constants.LIFESPAN_PER_CIG)}</mark>
-            만큼 더 살 수 있게 됐어요
-          </ListGroup.Item>
-        </ListGroup>
       </Card>
+      <ListGroup className="mt-1">
+        <ListGroup.Item>
+          🚭 <mark>{cigNum.toFixed(2)}개피의 담배</mark>를 참았고
+        </ListGroup.Item>
+        <ListGroup.Item>
+          ⏱️ <mark>{timeDelta2str(cigNum * constants.TIME_PER_CIG)}</mark>를
+          아꼈고
+        </ListGroup.Item>
+        <ListGroup.Item>
+          💵{" "}
+          <mark>
+            {(
+              cigNum * constants.COST_PER_CIG +
+              cigNum * constants.TIME_PER_CIG * constants.COST_PER_CIGTIME
+            ).toFixed(2)}
+            원
+          </mark>
+          을 벌었고
+        </ListGroup.Item>
+        <ListGroup.Item>
+          😁 <mark>{timeDelta2str(cigNum * constants.LIFESPAN_PER_CIG)}</mark>
+          만큼 더 살 수 있게 됐어요
+        </ListGroup.Item>
+      </ListGroup>
       <CampaignGiveupModal startsAt={startsAt} />
     </>
   );

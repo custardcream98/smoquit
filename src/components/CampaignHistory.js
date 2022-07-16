@@ -4,7 +4,6 @@ import { Card, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import timeDelta2str from "core/timeDelta2Str";
 import * as constants from "core/constants";
-import style from "./CampaignHistory.module.css";
 
 const CampaignHistory = ({ campaigns }) => {
   const [aggTime, setAggTime] = useState(0);
@@ -59,15 +58,17 @@ const CampaignHistory = ({ campaigns }) => {
     setLifespan(constants.LIFESPAN_PER_CIG * cigNum);
 
   return (
-    <Card className={style.CampaignHistory}>
-      <Card.Body>
-        <Card.Text>
-          <strong>{campaigns.length}번</strong>의 시도,
-        </Card.Text>
-        <Card.Text>총 {timeDelta2str(aggTime)},</Card.Text>
-        <Card.Text>그동안 {profile.displayName}님은...</Card.Text>
-      </Card.Body>
-      <ListGroup>
+    <>
+      <Card className="mt-2">
+        <Card.Body>
+          <Card.Text>
+            <strong>{campaigns.length}번</strong>의 시도,
+          </Card.Text>
+          <Card.Text>총 {timeDelta2str(aggTime)},</Card.Text>
+          <Card.Text>그동안 {profile.displayName}님은...</Card.Text>
+        </Card.Body>
+      </Card>
+      <ListGroup className="mt-1">
         <ListGroup.Item>
           🚭 <mark>{aggCig}개피의 담배</mark>를 참았고
         </ListGroup.Item>
@@ -81,7 +82,7 @@ const CampaignHistory = ({ campaigns }) => {
           😁 <mark>{timeDelta2str(lifespan)}</mark>만큼 더 살 수 있게 됐어요
         </ListGroup.Item>
       </ListGroup>
-    </Card>
+    </>
   );
 };
 

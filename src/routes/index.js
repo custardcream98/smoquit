@@ -12,13 +12,12 @@ import Profile from "routes/Profile";
 import CreateCampaign from "routes/CreateCampaign";
 import LeaderBoard from "routes/LeaderBoard";
 import Navigation from "components/Navigation";
-import styles from "./index.module.css";
 
 const AppRouter = ({ isLoggedIn }) => {
   return (
     <Router>
       {isLoggedIn && <Navigation />}
-      <div className={styles.Router}>
+      <div className="ms-3 me-3 mt-2">
         <Routes>
           {isLoggedIn ? (
             <>

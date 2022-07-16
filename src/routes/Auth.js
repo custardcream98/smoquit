@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { fireAuth, fireStore } from "firebaseSetup";
@@ -30,11 +31,14 @@ const Auth = () => {
     event.preventDefault();
     try {
       if (newAccount) {
-        const createdUser = await createUserWithEmailAndPassword(
+        let createdUser = await createUserWithEmailAndPassword(
           fireAuth,
           email,
           password
         );
+        createdUser = await updateProfile(createdUser.user, {
+          displayName: createdUser.user.email.split("@")[0],
+        });
         await setDoc(doc(fireStore, DOC_PROFILE, createdUser.user.uid), {
           cigPerDay: 20,
         });

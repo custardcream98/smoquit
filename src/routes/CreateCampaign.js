@@ -5,7 +5,6 @@ import { setDoc, doc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { fireStore } from "firebaseSetup";
 import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
-import styles from "./CreateCampaign.module.css";
 
 const CreateCampaign = () => {
   const profile = useSelector((state) => state.profile);
@@ -60,7 +59,7 @@ const CreateCampaign = () => {
           value={name}
           onChange={onChange}
         />
-        <div className={`d-grid gap-2 ${styles.Buttonstyle}`}>
+        <div className="d-grid gap-2 mt-3">
           <Button
             type="submit"
             name="submit"

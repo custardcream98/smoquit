@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Spinner } from "react-bootstrap";
 import { doc, getDoc } from "firebase/firestore";
@@ -16,9 +16,6 @@ const App = () => {
     fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
         setIsLoggedIn(true);
-        if (!user.displayName) {
-          user.displayName = user.email.split("@")[0];
-        }
         const cigPerDay = (
           await getDoc(doc(fireStore, DOC_PROFILE, user.uid))
         ).data().cigPerDay;

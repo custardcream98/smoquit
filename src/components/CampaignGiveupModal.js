@@ -29,7 +29,12 @@ const CampaignGiveupModal = ({ startsAt }) => {
 
   return (
     <>
-      <Button variant="outline-danger" size="sm" onClick={handleShow}>
+      <Button
+        variant="outline-danger"
+        size="sm"
+        onClick={handleShow}
+        className="mt-3"
+      >
         포기하기
       </Button>
 

@@ -7,7 +7,6 @@ import { fireStore } from "firebaseSetup";
 import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
 import CampaignCard from "components/CampaignCard";
 import CampaignHistory from "components/CampaignHistory";
-import style from "./Home.module.css";
 
 const Home = () => {
   const profile = useSelector((state) => state.profile);
@@ -31,11 +30,11 @@ const Home = () => {
 
   const createCampaignBtn = (sayHello) => (
     <>
-      <p className={`h5 ${style.Home__Usertitle}`}>
-        어서오세요 {profile.displayName}님 👋
-      </p>
-      <h3>금연 {sayHello ? "시작해보는게 어때요?" : "다시 도전해봐요!"}</h3>
-      <Button as={Link} to="/create" variant="primary">
+      <p className="h5 mt-5 mb-2">어서오세요 {profile.displayName}님 👋</p>
+      <h1 className="mb-3">
+        금연 {sayHello ? "시작해보는게 어때요?" : "다시 도전해봐요!"}
+      </h1>
+      <Button as={Link} to="/create" variant="primary" className="mb-4">
         <span>#노담 시작하기</span>
       </Button>
     </>
