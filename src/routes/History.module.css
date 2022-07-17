@@ -1,0 +1,15 @@
+.ItemTitle {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.ItemTime {
+    font-size: 0.6rem;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.ItemContent {
+    font-size: 0.85rem;
+    font-weight: 400;
+}

@@ -15,7 +15,7 @@
 
 ## Stack 및 얻고자 하는 것
 
-- `React.js` `Redux` `Firebase`
+- `React.js` `Redux` `Redux-Tunk` `Firebase`
 - NoSQL 자유자재로 다루기
 - React.js로 예쁜 UI 구현하기
 - 실제 서비스하는 경험 얻기
@@ -54,3 +54,15 @@
 - 💼 **profile**: user에 추가로 저장해야 하는 정보
   - 📙 **uid**
     - 📄 **sigPerDay**: 하루에 몇개피 펴왔는지에 대한 정보, 메인 화면에서 필요한 정보 계산에 사용
+
+---
+
+# What I've Learned
+
+천천히 정리할 예정입니다
+
+## Redux-Tunk
+
+Redux 미들웨어로, Redux Store의 dispatch, getState 메소드와 상호작용이 필요한 로직을 구현할 수 있게 도와줍니다. Redux 공식 문서에서 권장하는 방법처럼 Redux Toolkit을 사용한다면 기본적으로 포함되는 미들웨어입니다.
+
+Redux에서는 원래 action을 dispatch해 간단한 동기(synchronous)적인 연산만 가능합니다. API fetch과 같이 비동기 연산으로 Store를 유지할 필요가 있다면 Redux Tunk같은 미들웨어의 도움을 받아야 합니다.

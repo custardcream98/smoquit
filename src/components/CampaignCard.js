@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Card, Badge, ListGroup } from "react-bootstrap";
-import timeDelta2str from "core/timeDelta2Str";
+import timeDelta2str from "core/timeDelta2str";
 import * as constants from "core/constants";
 import CampaignGiveupModal from "components/CampaignGiveupModal";
 import styles from "./CampaignCard.module.css";
 
 const CampaignCard = ({ name, attempCount, startsAt }) => {
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(Date.now() - startsAt);
   const [cigNum, setCigNum] = useState(0);
 
   const profile = useSelector((state) => state.profile);
@@ -22,11 +22,6 @@ const CampaignCard = ({ name, attempCount, startsAt }) => {
 
     return () => clearInterval(countUp);
   }, [timer]);
-
-  // const date2str = (date) =>
-  //   `${date.getFullYear()}년 ${
-  //     date.getMonth() + 1
-  //   }월 ${date.getDate()}일 ${date.getHours()}:${date.getMinutes()}`;
 
   // const onClick = async () => {
   //   const campaignDocRef = doc(

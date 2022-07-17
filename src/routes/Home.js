@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -7,10 +7,12 @@ import { fireStore, fireAuth } from "firebaseSetup";
 import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
 import CampaignCard from "components/CampaignCard";
 import CampaignHistory from "components/CampaignHistory";
+import { setCampaigns as setCampaignsStore } from "store/actions/campaignsAction";
 
 const Home = () => {
   const profile = useSelector((state) => state.profile);
   const [campaigns, setCampaigns] = useState([]);
+  const dispatch = useDispatch();
 
   const loadCampaigns = async () => {
     onSnapshot(
@@ -25,6 +27,9 @@ const Home = () => {
         snapshot.forEach((doc) => campaignsArr.push(doc));
         campaignsArr.sort((a, b) => b.data().startsAt - a.data().startsAt);
         setCampaigns(campaignsArr);
+        const campaignsDocArr = [];
+        campaignsArr.forEach((doc) => campaignsDocArr.push(doc.data()));
+        dispatch(setCampaignsStore({ campaigns: campaignsDocArr }));
       }
     );
   };

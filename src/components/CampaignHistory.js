@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Card, ListGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
-import timeDelta2str from "core/timeDelta2Str";
+import timeDelta2str from "core/timeDelta2str";
 import * as constants from "core/constants";
 
 const CampaignHistory = ({ campaigns }) => {

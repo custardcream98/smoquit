@@ -128,7 +128,8 @@ const Profile = () => {
           변경 완료 ✅
         </Toast.Header>
         <Toast.Body>
-          <strong>{name}</strong>을 변경했어요!
+          <strong>{name}</strong>
+          {name[name.length - 1] === "수" ? "를" : "을"} 변경했어요!
         </Toast.Body>
       </Toast>
     </ToastContainer>
@@ -145,6 +146,20 @@ const Profile = () => {
   return (
     <>
       <Form noValidate validated={isValid} onSubmit={onSubmit}>
+        <Form.Group as={Row} className="mb-3">
+          <Form.Label column xs="3">
+            이메일
+          </Form.Label>
+          <Col xs="9" className="ps-0 pe-2">
+            <Form.Control
+              type="email"
+              name="email"
+              readOnly
+              value={user.email}
+            />
+          </Col>
+        </Form.Group>
+
         <Form.Group as={Row} className="mb-3">
           <Form.Label column xs="3">
             닉네임

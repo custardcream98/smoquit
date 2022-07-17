@@ -11,13 +11,14 @@ import Home from "routes/Home";
 import Profile from "routes/Profile";
 import CreateCampaign from "routes/CreateCampaign";
 import LeaderBoard from "routes/LeaderBoard";
+import History from "routes/History";
 import Navigation from "components/Navigation";
 
 const AppRouter = ({ isLoggedIn }) => {
   return (
     <Router>
       {isLoggedIn && <Navigation />}
-      <div className="ms-3 me-3 mt-2">
+      <div className="ms-3 me-3 mt-2 mb-3">
         <Routes>
           {isLoggedIn ? (
             <>
@@ -25,6 +26,7 @@ const AppRouter = ({ isLoggedIn }) => {
               <Route path="/leaderboard" element={<LeaderBoard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/create" element={<CreateCampaign />} />
+              <Route path="/history" element={<History />} />
               <Route path="/*" element={<Navigate replace to="/" />} />
             </>
           ) : (
