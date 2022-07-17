@@ -224,8 +224,12 @@ const Auth = () => {
           <Button
             onClick={onSubmit}
             variant="outline-primary"
-            className={`mb-2 me-2 mt-2 col-6 ${styles.SmallFont}`}
-            disabled={isEmailLoginClicked}
+            className={`mb-2 me-2 mt-2 col-6 d-flex justify-content-center align-middle ${styles.SmallFont}`}
+            disabled={
+              isEmailLoginClicked ||
+              checkPasswordSecurity() === "약함" ||
+              !validateEmail()
+            }
           >
             {isEmailLoginClicked ? (
               <>
@@ -235,6 +239,7 @@ const Auth = () => {
                   size="sm"
                   role="status"
                   aria-hidden="true"
+                  className="me-2"
                 />
                 <span className="visually-hidden">Loading...</span>
               </>
@@ -249,7 +254,7 @@ const Auth = () => {
           name="google"
           onClick={onGoogleSignInClick}
           variant="outline-dark"
-          className={`me-2 col-6 ${styles.SmallFont}`}
+          className={`me-2 col-6 d-flex justify-content-center align-middle ${styles.SmallFont}`}
           disabled={isGoogleLoginClicked}
         >
           {isGoogleLoginClicked ? (
@@ -260,13 +265,14 @@ const Auth = () => {
                 size="sm"
                 role="status"
                 aria-hidden="true"
+                className="me-2"
               />
               <span className="visually-hidden">Loading...</span>
             </>
           ) : null}
           <img
             width="20px"
-            className="mb-1 me-2"
+            className="me-2"
             alt="Google sign-in"
             src={Google}
           />

@@ -11,15 +11,24 @@ import {
   ToastContainer,
   Spinner,
 } from "react-bootstrap";
-import { updateProfile } from "firebase/auth";
+import { updateProfile, deleteUser } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import { fireAuth, fireStore } from "firebaseSetup";
 import { DOC_PROFILE } from "firebaseSetup/docNames";
+import WithdrawalModal from "components/WithdrawalModal";
 
 const Profile = () => {
   const navigate = useNavigate();
   const onLogOutClick = () => {
     fireAuth.signOut();
+    navigate("/", { replace: true });
+  };
+
+  const [isWithdrawalClicked, setIsWithdrawalClicked] = useState(false);
+  const toggleIsWithdrawalModalClick = () =>
+    setIsWithdrawalClicked((priv) => !priv);
+  const onWithdrawalClick = () => {
+    deleteUser(fireAuth.currentUser);
     navigate("/", { replace: true });
   };
 
@@ -263,12 +272,32 @@ const Profile = () => {
           </Col>
         </Form.Group>
       </Form>
-
-      <Button onClick={onLogOutClick} variant="outline-danger">
-        로그아웃
-      </Button>
+      <div className="d-flex flex-row justify-content-end mt-5">
+        <Button
+          onClick={toggleIsWithdrawalModalClick}
+          variant="outline-danger"
+          style={{ fontSize: ".9rem" }}
+          disabled={isWithdrawalClicked}
+        >
+          회원탈퇴
+        </Button>
+      </div>
+      <div className="d-flex flex-row justify-content-end mt-4">
+        <Button
+          onClick={onLogOutClick}
+          variant="danger"
+          style={{ fontSize: ".9rem" }}
+        >
+          로그아웃
+        </Button>
+      </div>
       {toastMsg(toastA, toggleToastA, "닉네임")}
       {toastMsg(toastB, toggleToastB, "하루에 피우는 담배 개피 수")}
+      <WithdrawalModal
+        show={isWithdrawalClicked}
+        handleClose={toggleIsWithdrawalModalClick}
+        onWithdrawalClick={onWithdrawalClick}
+      />
     </>
   );
 };
