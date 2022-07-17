@@ -125,13 +125,13 @@ const Profile = () => {
     </ToastContainer>
   );
 
-  useEffect(() => {
-    console.log(`${displayName} ${cigPerDay}`);
-  }, []);
+  // useEffect(() => {
+  //   console.log(`${displayName} ${cigPerDay}`);
+  // }, []);
 
-  useEffect(() => {
-    console.log(isDisplayNameEditable);
-  }, [isDisplayNameEditable]);
+  // useEffect(() => {
+  //   console.log(isDisplayNameEditable);
+  // }, [isDisplayNameEditable]);
 
   return (
     <>
@@ -147,19 +147,23 @@ const Profile = () => {
               required
               maxLength={30}
               minLength={4}
-              isValid={isDisplayNameEditable ? isValid : null}
+              isValid={
+                isDisplayNameEditable && displayName !== user.displayName
+                  ? isValid
+                  : null
+              }
               isInvalid={isDisplayNameEditable ? !isValid : null}
               readOnly={!isDisplayNameEditable}
               value={displayName}
               onChange={onChange}
             />
             <Form.Control.Feedback type="valid">
-              금연인에 어울리는 닉네임이네요!
+              멋진 닉네임이네요!
             </Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
-              <li>알파벳 소문자, 대문자, _, 숫자만 사용할 수 있어요</li>
-              <li>알파벳으로 시작해야 해요</li>
-              <li>최소 4글자 이상 입력해주세요</li>
+              <li>알파벳 소문자, 대문자, _, 숫자만 사용할 수 있어요.</li>
+              <li>알파벳으로 시작해야 해요.</li>
+              <li>최소 4글자 이상 입력해주세요.</li>
             </Form.Control.Feedback>
           </Col>
           <Col xs="2" className="ps-0 pe-0">

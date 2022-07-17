@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { Card, Badge, ListGroup, Container } from "react-bootstrap";
+import { Card, Badge, ListGroup } from "react-bootstrap";
 import timeDelta2str from "core/timeDelta2Str";
 import * as constants from "core/constants";
 import CampaignGiveupModal from "components/CampaignGiveupModal";

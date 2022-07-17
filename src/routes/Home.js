@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { collection, onSnapshot } from "firebase/firestore";
-import { fireStore } from "firebaseSetup";
+import { fireStore, fireAuth } from "firebaseSetup";
 import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
 import CampaignCard from "components/CampaignCard";
 import CampaignHistory from "components/CampaignHistory";
@@ -14,7 +14,12 @@ const Home = () => {
 
   const loadCampaigns = async () => {
     onSnapshot(
-      collection(fireStore, DOC_CAMPAIGNS_BY_USER, profile.uid, DOC_CAMPAIGNS),
+      collection(
+        fireStore,
+        DOC_CAMPAIGNS_BY_USER,
+        fireAuth.currentUser.uid,
+        DOC_CAMPAIGNS
+      ),
       (snapshot) => {
         const campaignsArr = [];
         snapshot.forEach((doc) => campaignsArr.push(doc));

@@ -1,21 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, Container } from "react-bootstrap";
-import logo from "static/logo.png";
-import styles from "./Navigation.module.css";
+import { Navbar, Nav } from "react-bootstrap";
+import { AppLogoWithTitle } from "./Logo";
 
 const Navigation = () => {
   return (
     <Navbar bg="white">
       <Navbar.Brand className="d-flex align-items-center mb-0 ms-3">
-        <img
-          src={logo}
-          alt="Smoquit Logo"
-          width="35"
-          height="35"
-          className="me-2"
-        />{" "}
-        <span className={styles.GradientTitle}>Smoquit</span>
+        <AppLogoWithTitle />
       </Navbar.Brand>
       <Nav className="ms-auto me-2">
         <Nav.Link as={Link} to="/">

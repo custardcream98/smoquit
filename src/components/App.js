@@ -16,9 +16,8 @@ const App = () => {
     fireAuth.onAuthStateChanged(async (user) => {
       if (user) {
         setIsLoggedIn(true);
-        const cigPerDay = (
-          await getDoc(doc(fireStore, DOC_PROFILE, user.uid))
-        ).data().cigPerDay;
+        let cigPerDay = await getDoc(doc(fireStore, DOC_PROFILE, user.uid));
+        cigPerDay = cigPerDay.data().cigPerDay;
         dispatch(setProfile({ ...user, cigPerDay }));
       } else {
         setIsLoggedIn(false);

@@ -1,0 +1,13 @@
+.SmallFont {
+    font-size: 0.8rem
+}
+
+.Subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    /* color: #0E6DFD; */
+    background: linear-gradient(to right, #68dd7e, #0E6DFD);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
