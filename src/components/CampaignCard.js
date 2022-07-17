@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { Card, Badge, ListGroup } from "react-bootstrap";
+import { Card, Badge, ListGroup, Container } from "react-bootstrap";
 import timeDelta2str from "core/timeDelta2Str";
 import * as constants from "core/constants";
 import CampaignGiveupModal from "components/CampaignGiveupModal";
@@ -44,19 +44,23 @@ const CampaignCard = ({ name, attempCount, startsAt }) => {
 
   return (
     <>
-      <div>
+      <div className="justify-content-start d-flex align-items-center">
         {/* <p className={styles.StartedAt}>{`
         ${date2str(startsAt)} 부터 ${attempCount}번째 도전`}</p> */}
-
-        <h2>
-          <Badge bg="primary">
-            {name}{" "}
+        <span className="h2">{name}</span>
+        <span className="h6 d-flex align-items-center ps-2 justify-content-between">
+          <Badge
+            bg="primary"
+            pill
+            className="d-flex align-items-center justify-content-between"
+          >
+            진행중
             <Badge
-              bg="secondary"
-              className={styles.AttempCount}
+              bg="light"
+              className={`${styles.AttempCount} align-self-end text-primary ms-1`}
             >{`${attempCount}번째 도전`}</Badge>
           </Badge>
-        </h2>
+        </span>
       </div>
       <Card>
         <Card.Body>

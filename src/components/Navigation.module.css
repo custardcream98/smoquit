@@ -1,0 +1,8 @@
+.GradientTitle {
+    background: linear-gradient(to right, #92f2a4, #0E6DFD);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    /* font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif */
+}
