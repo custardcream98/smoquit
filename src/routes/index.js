@@ -18,7 +18,7 @@ const AppRouter = ({ isLoggedIn }) => {
   return (
     <Router>
       {isLoggedIn && <Navigation />}
-      <div className="ms-3 me-3 mt-2 mb-3">
+      <div className="ms-3 me-3 mt-1 mb-3">
         <Routes>
           {isLoggedIn ? (
             <>

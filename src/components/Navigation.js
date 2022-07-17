@@ -6,7 +6,7 @@ import styles from "./Navigation.module.css";
 
 const Navigation = () => {
   return (
-    <Navbar bg="white">
+    <Navbar bg="white" className="pt-1 pb-1">
       <Navbar.Brand className="d-flex align-items-center mb-0 ms-3">
         <AppLogoWithTitle />
       </Navbar.Brand>

@@ -1,32 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  Card,
-  CardGroup,
-  Badge,
-  ListGroup,
-  Col,
-  Row,
-  Container,
-} from "react-bootstrap";
-import { date2str, timeDelta2str } from "core";
+import { useSelector } from "react-redux";
+import { ButtonGroup, Button } from "react-bootstrap";
+import HistoricalCampaignCard from "components/HistoricalCampaignCard";
 import styles from "./History.module.css";
 
 const History = () => {
   const campaignsStore = useSelector((state) => state.campaigns);
   const [campaigns, setCampaigns] = useState([]);
 
-  const campaignCard = () => {};
-
-  const calCampaignRank = () => {
-    // campaigns.sort((a, b) => (a.endsAt - a.startsAt) )
-  };
-
   useEffect(() => {
     setCampaigns(
       campaignsStore
         .map((campaign) => ({
-          duration: campaign.endsAt - campaign.startsAt,
+          duration:
+            campaign.endsAt === 0
+              ? Date.now() - campaign.startsAt
+              : campaign.endsAt - campaign.startsAt,
           ...campaign,
         }))
         .sort((a, b) => b.duration - a.duration)
@@ -38,57 +27,37 @@ const History = () => {
     );
   }, []);
 
-  useEffect(() => {
-    console.log(campaigns);
-  }, [campaigns]);
+  const onOrderbyTimeClick = () =>
+    setCampaigns((priv) => [...priv.sort((a, b) => b.startsAt - a.startsAt)]);
 
-  return campaigns.map((campaign) => (
-    <HistoricalCampaignCard key={campaign.startsAt} campaign={campaign} />
-  ));
-};
-
-const HistoricalCampaignCard = ({ campaign }) => {
-  const [timer, setTimer] = useState(Date.now() - campaign.startsAt);
-
-  const isOnGoing = campaign.endsAt == 0;
-  useEffect(() => {
-    let countUp;
-    if (isOnGoing) {
-      countUp = setInterval(() => {
-        setTimer(Date.now() - campaign.startsAt);
-      }, 1000);
-    }
-
-    return () => clearInterval(countUp);
-  }, [timer]);
+  const onOrderbyDurationClick = () =>
+    setCampaigns((priv) => [...priv.sort((a, b) => b.duration - a.duration)]);
 
   return (
-    <Card className="mb-2">
-      <Card.Body>
-        <Card.Title className={`mb-1 ${styles.ItemTitle}`}>
-          {campaign.name}
-          {isOnGoing ? (
-            <Badge bg="success" className="ms-2">
-              도전중
-            </Badge>
-          ) : null}
-          {campaign.rank === 1 ? (
-            <Badge bg="primary" className="ms-2">
-              최고기록
-            </Badge>
-          ) : null}
-        </Card.Title>
-        <Card.Text className={`${styles.ItemTime}`}>
-          {date2str(new Date(campaign.startsAt))} →{" "}
-          {isOnGoing ? null : date2str(new Date(campaign.endsAt)) + " 까지"}
-        </Card.Text>
-        <Card.Text className="mt-2">
-          {isOnGoing
-            ? timeDelta2str(new Date(timer))
-            : timeDelta2str(new Date(campaign.duration))}
-        </Card.Text>
-      </Card.Body>
-    </Card>
+    <>
+      <div className="d-flex flex-row justify-content-end">
+        <ButtonGroup>
+          <Button
+            variant="primary"
+            className={`pb-1 pt-1 mb-1 ${styles.Btn}`}
+            onClick={onOrderbyTimeClick}
+          >
+            최신순
+          </Button>
+          <Button
+            variant="primary"
+            className={`pb-1 pt-1 mb-1 ${styles.Btn}`}
+            onClick={onOrderbyDurationClick}
+          >
+            기록순
+          </Button>
+        </ButtonGroup>
+      </div>
+
+      {campaigns.map((campaign) => (
+        <HistoricalCampaignCard key={campaign.startsAt} campaign={campaign} />
+      ))}
+    </>
   );
 };
 
