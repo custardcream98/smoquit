@@ -15,7 +15,7 @@ const History = () => {
           duration:
             campaign.endsAt === 0
               ? Date.now() - campaign.startsAt
-              : campaign.endsAt - campaign.startsAt,
+              : campaign.duration,
           ...campaign,
         }))
         .sort((a, b) => b.duration - a.duration)

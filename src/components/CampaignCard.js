@@ -23,20 +23,6 @@ const CampaignCard = ({ name, attempCount, startsAt }) => {
     return () => clearInterval(countUp);
   }, [timer]);
 
-  // const onClick = async () => {
-  //   const campaignDocRef = doc(
-  //     fireStore,
-  //     DOC_CAMPAIGNS_BY_USER,
-  //     profile.uid,
-  //     DOC_CAMPAIGNS,
-  //     `${startsAt.getTime()}`
-  //   );
-
-  //   await updateDoc(campaignDocRef, {
-  //     endsAt: Date.now(),
-  //   });
-  // };
-
   return (
     <>
       <div className="justify-content-start d-flex align-items-center">

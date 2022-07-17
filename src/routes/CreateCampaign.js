@@ -28,6 +28,7 @@ const CreateCampaign = () => {
       name: name,
       startsAt: Date.now(),
       endsAt: 0,
+      duration: 0,
     };
 
     try {

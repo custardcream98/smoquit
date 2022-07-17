@@ -50,6 +50,7 @@
         - 📄 **name**: 캠페인 이름(간단한 메모)
         - 📄 **startsAt**: 캠페인 시작 시각(int, Timestamp in millisecounds)
         - 📄 **endsAt**: 캠페인 종료 시각, 각 캠페인 포기시에 set(int, Timestamp in millisecounds)
+        - 📄 **duration**: 캠페인 지속 시간, 각 캠페인 포기시에 set(int, Timestamp in millisecounds)
 
 - 💼 **profile**: user에 추가로 저장해야 하는 정보
   - 📙 **uid**

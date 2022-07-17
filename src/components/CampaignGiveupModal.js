@@ -22,8 +22,11 @@ const CampaignGiveupModal = ({ startsAt }) => {
       `${startsAt.getTime()}`
     );
 
+    const now = Date.now();
+
     await updateDoc(campaignDocRef, {
-      endsAt: Date.now(),
+      endsAt: now,
+      duration: now - startsAt,
     });
   };
 
