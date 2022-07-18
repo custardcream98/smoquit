@@ -12,9 +12,13 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { updateProfile, deleteUser } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, collection, getDocs } from "firebase/firestore";
 import { fireAuth, fireStore } from "firebaseSetup";
-import { DOC_PROFILE } from "firebaseSetup/docNames";
+import {
+  DOC_PROFILE,
+  DOC_CAMPAIGNS_BY_USER,
+  DOC_CAMPAIGNS,
+} from "firebaseSetup/docNames";
 import WithdrawalModal from "components/WithdrawalModal";
 
 const Profile = () => {
@@ -64,6 +68,18 @@ const Profile = () => {
               await updateProfile(user, {
                 displayName: displayName,
               });
+              const campaigns = await getDocs(
+                collection(
+                  fireStore,
+                  DOC_CAMPAIGNS_BY_USER,
+                  profile.uid,
+                  DOC_CAMPAIGNS
+                )
+              );
+              campaigns.forEach(
+                async (doc) =>
+                  await updateDoc(doc.ref, { userName: displayName })
+              );
               await fireAuth.currentUser.reload();
             }
 

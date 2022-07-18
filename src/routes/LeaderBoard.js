@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
-  collection,
   onSnapshot,
   query,
   orderBy,
   collectionGroup,
   limit,
-  getDocs,
   where,
 } from "firebase/firestore";
 import { fireStore } from "firebaseSetup";
-import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
+import { DOC_CAMPAIGNS } from "firebaseSetup/docNames";
+import LeaderBoardCard from "components/LeaderBoardCard";
 
 const LeaderBoard = () => {
   // // 전체 데이터 가져와서 front에서 계산해야 함
@@ -43,27 +42,13 @@ const LeaderBoard = () => {
   useEffect(() => {
     onSnapshot(qOrderByStartsAt, (snapshot) => {
       let leaderboardDataSnapshot = [];
-      snapshot.forEach((doc) =>
-        leaderboardDataSnapshot.push({
-          uid: doc.id,
-          startsAt: doc.data().startsAt,
-          endsAt: doc.data().endsAt,
-          duration: doc.data().duration,
-        })
-      );
+      snapshot.forEach((doc) => leaderboardDataSnapshot.push(doc.data()));
       setOrderByStartsAt((priv) => leaderboardDataSnapshot);
     });
 
     onSnapshot(qOrderByDuration, (snapshot) => {
       let leaderboardDataSnapshot = [];
-      snapshot.forEach((doc) =>
-        leaderboardDataSnapshot.push({
-          uid: doc.id,
-          startsAt: doc.data().startsAt,
-          endsAt: doc.data().endsAt,
-          duration: doc.data().duration,
-        })
-      );
+      snapshot.forEach((doc) => leaderboardDataSnapshot.push(doc.data()));
       setOrderByDuration((priv) => leaderboardDataSnapshot);
     });
   }, []);
@@ -73,14 +58,34 @@ const LeaderBoard = () => {
   useEffect(() => {
     const now = Date.now();
     console.log(orderByStartsAt);
-    let campaignData = orderByStartsAt.map((campaign) => ({
-      duration: now - campaign.startsAt,
-      ...campaign,
-    }));
+    let campaignData = orderByStartsAt
+      .map((campaign) => ({
+        duration: now - campaign.startsAt,
+        ...campaign,
+      }))
+      .concat(orderByDuration);
 
-    console.log(campaignData);
+    setLeaderboardData((priv) =>
+      campaignData.sort((a, b) => b.duration - a.duration)
+    );
   }, [orderByDuration, orderByStartsAt]);
-  return <div>개발중입니다</div>;
+
+  // useEffect(() => {
+
+  //   leaderboardData.sort((a, b) => b.duration - a.duration);
+  // }, [leaderboardData]);
+
+  return (
+    <div>
+      {leaderboardData.map((campaign, index) => (
+        <LeaderBoardCard
+          key={`${campaign.userName}${campaign.startsAt}`}
+          campaign={campaign}
+          rank={index + 1}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default LeaderBoard;
