@@ -25,7 +25,7 @@ const History = () => {
         }))
         .sort((a, b) => b.startsAt - a.startsAt)
     );
-  }, []);
+  }, [campaignsStore]);
 
   const onOrderbyTimeClick = () =>
     setCampaigns((priv) => [...priv.sort((a, b) => b.startsAt - a.startsAt)]);

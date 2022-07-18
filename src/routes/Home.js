@@ -1,42 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { collection, onSnapshot } from "firebase/firestore";
-import { fireStore, fireAuth } from "firebaseSetup";
-import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
 import CampaignCard from "components/CampaignCard";
 import CampaignHistory from "components/CampaignHistory";
-import { setCampaigns as setCampaignsStore } from "store/actions/campaignsAction";
 
 const Home = () => {
   const profile = useSelector((state) => state.profile);
-  const [campaigns, setCampaigns] = useState([]);
-  const dispatch = useDispatch();
-
-  const loadCampaigns = async () => {
-    onSnapshot(
-      collection(
-        fireStore,
-        DOC_CAMPAIGNS_BY_USER,
-        fireAuth.currentUser.uid,
-        DOC_CAMPAIGNS
-      ),
-      (snapshot) => {
-        const campaignsArr = [];
-        snapshot.forEach((doc) => campaignsArr.push(doc));
-        campaignsArr.sort((a, b) => b.data().startsAt - a.data().startsAt);
-        setCampaigns(campaignsArr);
-        const campaignsDocArr = [];
-        campaignsArr.forEach((doc) => campaignsDocArr.push(doc.data()));
-        dispatch(setCampaignsStore({ campaigns: campaignsDocArr }));
-      }
-    );
-  };
-
-  useEffect(() => {
-    loadCampaigns();
-  }, []);
+  const campaigns = useSelector((state) => state.campaigns);
 
   const createCampaignBtn = (sayHello) => (
     <>
@@ -53,12 +24,12 @@ const Home = () => {
   return (
     <div>
       {campaigns.length !== 0 ? (
-        campaigns[0].data().endsAt === 0 ? (
+        campaigns[0].endsAt === 0 ? (
           <CampaignCard
-            key={campaigns[0].id}
-            name={campaigns[0].data().name}
+            key={campaigns[0].startsAt}
+            name={campaigns[0].name}
             attempCount={campaigns.length + 1}
-            startsAt={new Date(campaigns[0].data().startsAt)}
+            startsAt={new Date(campaigns[0].startsAt)}
           />
         ) : (
           <>

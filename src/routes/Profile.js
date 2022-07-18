@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setProfile } from "store/actions/profileAction";
@@ -134,14 +134,6 @@ const Profile = () => {
       </Toast>
     </ToastContainer>
   );
-
-  // useEffect(() => {
-  //   console.log(`${displayName} ${cigPerDay}`);
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log(isDisplayNameEditable);
-  // }, [isDisplayNameEditable]);
 
   return (
     <>

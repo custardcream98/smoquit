@@ -67,3 +67,39 @@
 Redux 미들웨어로, Redux Store의 dispatch, getState 메소드와 상호작용이 필요한 로직을 구현할 수 있게 도와줍니다. Redux 공식 문서에서 권장하는 방법처럼 Redux Toolkit을 사용한다면 기본적으로 포함되는 미들웨어입니다.
 
 Redux에서는 원래 action을 dispatch해 간단한 동기(synchronous)적인 연산만 가능합니다. API fetch과 같이 비동기 연산으로 Store를 유지할 필요가 있다면 Redux Tunk같은 미들웨어의 도움을 받아야 합니다.
+
+## GH Pages로 Router 사용하기
+
+React.js는 SPA를 만들 수 있게 도와주는 tool입니다. 전통적인 방식이라면 클라이언트에서 요청한 경로에 맞는 html을 파싱해 보내주는것이 Web Server가 하는 일이지만, React를 사용하면 클라이언트의 url을 보고 html에서 새로 렌더링해야 되는 부분만 스크립트로 생성해 동적인 웹사이트를 만들 수 있게 해주는겁니다. 이 때 브라우저에서 제공하는 History API를 사용해 URL 또한 바뀌게 됩니다.
+
+쉽게 말해, 각 html을 미리 만들어 보여주는 과거의 Multi Page Application과 다르게 SPA에서는 html은 새로 안받고 요청에 따라 필요한 부분을 바로바로 만들어 보여주는 방식입니다.
+
+이렇게 하면 '새로고침 없는' 웹사이트를 만들 수 있어 사용자 입장에서 아주 만족스러운 웹 경험을 할 수 있습니다. 다른 페이지로 이동할 때 화면이 깜빡거리지 않고 부드럽게 딱딱 새로 렌더링되니까요.
+
+그런데, SPA는 앞서 말했듯 Url Route를 낚아채줘야 합니다. 그러려면 React 코드와 웹서버가 쿵짝이 맞아야 하는데, 우리가 로직을 바꿀 수 없는 웹서버인 gh pages로 React App을 배포하면 React가 낚아채 렌더링해도 gh pages의 웹서버가 '그런 Url에 해당하는 html이 없는데요?' 하고 404을 띄워버립니다.
+
+### HashRouter
+
+이를 해결할 가장 쉬운 방법은 `HashRouter`를 이용하는 겁니다. `HashRouter`는 baseurl 끝에 '/#/'를 추가합니다.
+
+예를 들어 `example.com/#/react/awesome`이라는 url이 있다면, 서버에서는 `#/react/awesome`이라는 path를 찾아가야 하는데, #덕분에 해쉬값으로 취급돼(는건지 실제 해쉬값인지는 공부가 필요) server side에서 접근하지 못하게 됩니다.(이를 Fragment라고 합니다.) client side에서 React Router가 `window.location.hash`를 파싱해주므로 React Router가 핸들링하게 되고, 이로써 SPA가 구동되는 방식입니다.
+
+그러나, `HashRouter`를 이용하면 SEO에 치명적이게 됩니다. URL에 해시태그(#)가 들어가는것도 별로 안이쁘고요.
+
+### 404 Redirect Trick
+
+그래서 똑띠기들이 재밌는 해결책을 내놨습니다. `404.html`을 만들어서, 해당 페이지가 실행될 때 홈('/')으로 접근할 경로의 쿼리 스트링과 함께 바로 리다이렉션을 시켜버리고, 홈에서 쿼리 스트링을 파싱해 본래의 경로로 되돌린 뒤 현재 경로로 대체하는겁니다.
+
+이를 위해 아래 Repository를 참고해 `404.html`을 추가하고, `index.html`에 script를 추가했습니다. 이 레포에 있는 코드는 정말 감사하게도 Google Bot이 스크립트를 실행하는 과정까지 고려해 짜주셨습니다. SEO도 어느정도 대응이 가능하다고 하네요.
+
+[참고한 Repository](https://github.com/rafgraph/spa-github-pages)
+
+[위 Repo의 한국어 번역본](https://sujinlee.me/spa-github-pages-ko/)
+
+### 이 과정을 통해 부수적으로 배운 점 - SSR
+
+SPA의 가장 큰 단점은 Client Side Rendering 방식으로 구현할 시 첫 페이지 로딩이 오래 걸린다는 것입니다. 한번의 로딩으로 모든 페이지에 대한 스크립트를 불러와야 하니, 웹사이트 크기가 커질수록 첫 로딩의 부담이 가중됩니다.
+
+이를 해결할 수 있는 방법은 여러가지가 있고, 그 중의 하나가 Server Side Rendering으로, 말 그대로 웹서버측에서 렌더링해 보내주는 방식입니다.
+
+이 외에도 Static Site Generation, SSR과 SSG를 섞은 하이브리드 방식 등 제공하고자 하는 서비스의 크기 등에 따라 여러 방법으로 웹서버를 만들 수 있습니다.

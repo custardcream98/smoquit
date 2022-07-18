@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
@@ -16,7 +16,7 @@ import Navigation from "components/Navigation";
 
 const AppRouter = ({ isLoggedIn }) => {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       {isLoggedIn && <Navigation />}
       <div className="ms-3 me-3 mt-1 mb-3">
         <Routes>

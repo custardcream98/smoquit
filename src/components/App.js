@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Spinner } from "react-bootstrap";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, onSnapshot } from "firebase/firestore";
 import { setProfile } from "store/actions/profileAction";
+import { setCampaigns } from "store/actions/campaignsAction";
 import { fireAuth, fireStore } from "firebaseSetup";
-import { DOC_PROFILE } from "firebaseSetup/docNames";
+import {
+  DOC_PROFILE,
+  DOC_CAMPAIGNS,
+  DOC_CAMPAIGNS_BY_USER,
+} from "firebaseSetup/docNames";
 import AppRouter from "routes";
 
 const App = () => {
@@ -19,6 +24,22 @@ const App = () => {
         let cigPerDay = await getDoc(doc(fireStore, DOC_PROFILE, user.uid));
         cigPerDay = cigPerDay.data().cigPerDay;
         dispatch(setProfile({ ...user, cigPerDay }));
+        onSnapshot(
+          collection(
+            fireStore,
+            DOC_CAMPAIGNS_BY_USER,
+            fireAuth.currentUser.uid,
+            DOC_CAMPAIGNS
+          ),
+          (snapshot) => {
+            const campaignsArr = [];
+            snapshot.forEach((doc) => campaignsArr.push(doc));
+            campaignsArr.sort((a, b) => b.data().startsAt - a.data().startsAt);
+            const campaignsDocArr = [];
+            campaignsArr.forEach((doc) => campaignsDocArr.push(doc.data()));
+            dispatch(setCampaigns({ campaigns: campaignsDocArr }));
+          }
+        );
       } else {
         setIsLoggedIn(false);
       }
