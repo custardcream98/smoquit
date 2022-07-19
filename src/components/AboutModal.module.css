@@ -1,0 +1,8 @@
+.AboutTitle {
+    font-weight: 600;
+    color: #0E6DFD;
+}
+
+.Content :not(h5) {
+    font-size: 0.8rem;
+}

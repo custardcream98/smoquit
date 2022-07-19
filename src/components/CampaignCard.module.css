@@ -2,3 +2,8 @@
     font-weight: 500;
     font-size: calc(0.2rem + 0.9vw);
 }
+
+.CampaignTitle {
+    font-weight: 600;
+    font-size: calc(0.9rem + 0.9vw);
+}

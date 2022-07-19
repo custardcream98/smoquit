@@ -25,11 +25,9 @@ const CampaignCard = ({ name, attempCount, startsAt }) => {
 
   return (
     <>
-      <div className="justify-content-start d-flex align-items-center">
-        {/* <p className={styles.StartedAt}>{`
-        ${date2str(startsAt)} 부터 ${attempCount}번째 도전`}</p> */}
-        <span className="h2">{name}</span>
-        <span className="h6 d-flex align-items-center ps-2 justify-content-between">
+      <div className="justify-content-start d-flex align-items-center mb-2">
+        <span className={styles.CampaignTitle}>{name}</span>
+        <span className="ps-2">
           <Badge
             bg="primary"
             pill
@@ -38,7 +36,7 @@ const CampaignCard = ({ name, attempCount, startsAt }) => {
             진행중
             <Badge
               bg="light"
-              className={`${styles.AttempCount} align-self-end text-primary ms-1`}
+              className={`${styles.AttempCount} text-primary ms-1`}
             >{`${attempCount}번째 도전`}</Badge>
           </Badge>
         </span>

@@ -32,13 +32,6 @@ const LeaderBoard = () => {
     limit(20)
   );
 
-  // const onGoingQ = query(
-  //   collectionGroup(fireStore, DOC_CAMPAIGNS),
-  //   where("endsAt", "==", 0),
-  //   orderBy("startsAt"),
-  //   limit(20)
-  // );
-
   useEffect(() => {
     onSnapshot(qOrderByStartsAt, (snapshot) => {
       let leaderboardDataSnapshot = [];
@@ -53,8 +46,6 @@ const LeaderBoard = () => {
     });
   }, []);
 
-  // useEffect(() => {}, [leaderboardData]);
-
   useEffect(() => {
     const now = Date.now();
     let campaignData = orderByStartsAt
@@ -68,11 +59,6 @@ const LeaderBoard = () => {
       campaignData.sort((a, b) => b.duration - a.duration)
     );
   }, [orderByDuration, orderByStartsAt]);
-
-  // useEffect(() => {
-
-  //   leaderboardData.sort((a, b) => b.duration - a.duration);
-  // }, [leaderboardData]);
 
   return (
     <div>

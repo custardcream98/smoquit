@@ -143,13 +143,18 @@ const Auth = () => {
   return (
     <>
       <AuthNavigation />
-      <AppLogo className="mt-5" size={50} />
-      <br></br>
-      <AppTitle style={{ fontSize: "2.5rem" }} />
-      <p className={styles.Subtitle}>
-        나는 네가 <strong>#노담</strong>이면 좋겠어 <strong>#진심 #노담</strong>
-      </p>
-
+      <div className="ms-2">
+        <AppLogo className="mt-4" size={50} />
+        <br></br>
+        <AppTitle style={{ fontSize: "2.5rem" }} />
+        <p className={`mb-1 ${styles.Subtitle}`}>
+          나는 네가 <strong>#노담</strong>이면 좋겠어{" "}
+          <strong>#진심 #노담</strong>
+        </p>
+        <span className={`mb-1 ${styles.Subtitle}`}>
+          <strong>금연</strong>하는 당신을 위한 <strong>금연 카운터</strong>
+        </span>
+      </div>
       <div className={styles.Center}>
         <div className={`${styles.FormBox}`}>
           <Form onSubmit={onSubmit} className="mt-4" noValidate>
@@ -164,7 +169,6 @@ const Auth = () => {
                   name="email"
                   required
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                  // isValid={isDisplayNameEditable ? isValid : null}
                   isInvalid={
                     !validateEmail() && isEmailHasFocus && email.length > 4
                   }
