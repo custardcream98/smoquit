@@ -155,7 +155,7 @@ const Auth = () => {
           <strong>금연</strong>하는 당신을 위한 <strong>금연 카운터</strong>
         </span>
       </div>
-      <div className={styles.Center}>
+      <div className={`ms-2 me-2 ${styles.Center}`}>
         <div className={`${styles.FormBox}`}>
           <Form onSubmit={onSubmit} className="mt-4" noValidate>
             <Form.Group as={Row} className="mb-3">

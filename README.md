@@ -24,22 +24,6 @@
 
 ---
 
-## 구현된 기능
-
-### 로그인
-
-![로그인](./img//login.gif)
-
-### 금연 시작
-
-![금연시작](./img/createCampaign.gif)
-
-### 금연 포기
-
-![금연포기](./img/endCampaign.gif)
-
----
-
 ## NoSQL Firestore DB Structure
 
 `💼 Collection` `📙 Doc` `📄 Field`
@@ -107,3 +91,19 @@ SPA의 가장 큰 단점은 Client Side Rendering 방식으로 구현할 시 첫
 이를 해결할 수 있는 방법은 여러가지가 있고, 그 중의 하나가 Server Side Rendering으로, 말 그대로 웹서버측에서 렌더링해 보내주는 방식입니다.
 
 이 외에도 Static Site Generation, SSR과 SSG를 섞은 하이브리드 방식 등 제공하고자 하는 서비스의 크기 등에 따라 여러 방법으로 웹서버를 만들 수 있습니다.
+
+---
+
+## Prototype History
+
+### 로그인
+
+![로그인](./img//login.gif)
+
+### 금연 시작
+
+![금연시작](./img/createCampaign.gif)
+
+### 금연 포기
+
+![금연포기](./img/endCampaign.gif)
