@@ -148,7 +148,7 @@ const Auth = () => {
         <br></br>
         <AppTitle style={{ fontSize: "2.5rem" }} />
         <p className={`mb-1 ${styles.Subtitle}`}>
-          나는 네가 <strong>#노담</strong>이면 좋겠어{" "}
+          나는 네가 <strong>#노담</strong>이면_좋겠어{" "}
           <strong>#진심 #노담</strong>
         </p>
         <span className={`mb-1 ${styles.Subtitle}`}>

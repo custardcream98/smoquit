@@ -11,7 +11,7 @@ const AboutModal = ({ show, handleClose }) => {
         <Modal.Header closeButton>
           <AppLogo size={30} />
           <AppTitle style={{ fontSize: "1rem" }} className="me-2" />
-          <span className={styles.AboutTitle}>#노담이면 좋겠어!</span>
+          <span className={styles.AboutTitle}>#노담이면_좋겠어!</span>
         </Modal.Header>
         <div className={`m-3 ${styles.Content}`}>
           <h5>금연하는 당신을 위한 서비스 😉</h5>
@@ -61,6 +61,14 @@ const AboutModal = ({ show, handleClose }) => {
             <br></br>
             <a href="mailto: custardcream@kakao.com" target="_blank">
               <strong>이메일 custardcream@kakao.com</strong>
+            </a>
+          </p>
+        </div>
+        <div className="d-flex align-items-center justify-content-center">
+          <p style={{ fontSize: "0.5rem", color: "black" }}>
+            &copy; {new Date().getFullYear()}{" "}
+            <a href="https://github.com/custardcream98" target="_blank">
+              custardcream98
             </a>
           </p>
         </div>
