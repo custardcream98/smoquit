@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Spinner } from "react-bootstrap";
 import { doc, getDoc, collection, onSnapshot } from "firebase/firestore";
-import { setProfile } from "store/actions/profileAction";
-import { setCampaigns } from "store/actions/campaignsAction";
 import { fireAuth, fireStore } from "firebaseSetup";
 import {
   DOC_PROFILE,
   DOC_CAMPAIGNS,
   DOC_CAMPAIGNS_BY_USER,
 } from "firebaseSetup/docNames";
+import { setProfile } from "store/actions/profileAction";
+import { setCampaigns } from "store/actions/campaignsAction";
 import AppRouter from "routes";
 
 const App = () => {

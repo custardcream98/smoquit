@@ -1,10 +1,10 @@
-import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import App from "components/App";
 import rootReducer from "store/reducer";
+import "bootstrap/dist/css/bootstrap.css";
+import App from "components/App";
 
 const store = configureStore({
   reducer: rootReducer,

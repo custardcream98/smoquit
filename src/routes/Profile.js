@@ -52,7 +52,7 @@ const Profile = () => {
   const [cigPerDayEditLoading, setCigPerDayEditLoading] = useState(false);
   const [displayName, setDisplayName] = useState(user.displayName);
   const [cigPerDay, setCigPerDay] = useState(profile.cigPerDay);
-  const [isValid, setIsValid] = useState(true);
+  // const [isValid, setIsValid] = useState(true);
 
   const [toastA, setToastA] = useState(false);
   const [toastB, setToastB] = useState(false);
@@ -66,36 +66,35 @@ const Profile = () => {
     setToastB(false);
     switch (event.target.name) {
       case "displayName":
-        if (isValid) {
-          if (isDisplayNameEditable) {
-            if (displayName !== user.displayName) {
-              setDisplayNameEditLoading(true);
-              isDisplayName = true;
-              await updateProfile(user, {
-                displayName: displayName,
-              });
-              const campaigns = await getDocs(
-                collection(
-                  fireStore,
-                  DOC_CAMPAIGNS_BY_USER,
-                  profile.uid,
-                  DOC_CAMPAIGNS
-                )
-              );
-              campaigns.forEach(
-                async (doc) =>
-                  await updateDoc(doc.ref, { userName: displayName })
-              );
-              await fireAuth.currentUser.reload();
-            }
-
-            setIsDisplayNameEditable(false);
-          } else {
-            setCigPerDay(profile.cigPerDay);
-            setIsDisplayNameEditable(true);
-            setIsCigPerDayEditable(false);
+        // if (isValid) {
+        if (isDisplayNameEditable) {
+          if (displayName !== user.displayName) {
+            setDisplayNameEditLoading(true);
+            isDisplayName = true;
+            await updateProfile(user, {
+              displayName: displayName,
+            });
+            const campaigns = await getDocs(
+              collection(
+                fireStore,
+                DOC_CAMPAIGNS_BY_USER,
+                profile.uid,
+                DOC_CAMPAIGNS
+              )
+            );
+            campaigns.forEach(
+              async (doc) => await updateDoc(doc.ref, { userName: displayName })
+            );
+            await fireAuth.currentUser.reload();
           }
+
+          setIsDisplayNameEditable(false);
+        } else {
+          setCigPerDay(profile.cigPerDay);
+          setIsDisplayNameEditable(true);
+          setIsCigPerDayEditable(false);
         }
+        // }
         break;
       case "cigPerDay":
         if (isCigPerDayEditable) {
@@ -132,7 +131,7 @@ const Profile = () => {
     switch (event.target.name) {
       case "displayName":
         setDisplayName(event.target.value);
-        setIsValid(isDisplayNameValid(event.target.value));
+        // setIsValid(isDisplayNameValid(event.target.value));
         break;
       case "cigPerDay":
         setCigPerDay(event.target.value);
@@ -140,8 +139,8 @@ const Profile = () => {
     }
   };
 
-  const isDisplayNameValid = (name) =>
-    /^[A-Za-z][-A-Za-z0-9_]*$/.test(name) && name.length >= 4;
+  // const isDisplayNameValid = (name) =>
+  //   /^[A-Za-z][-A-Za-z0-9_]*$/.test(name) && name.length >= 4;
 
   const toastMsg = (show, onClose, name) => (
     <ToastContainer position="bottom-center" className="pb-4">
@@ -159,7 +158,8 @@ const Profile = () => {
 
   return (
     <>
-      <Form noValidate validated={isValid} onSubmit={onSubmit}>
+      {/* <Form noValidate validated={isValid} onSubmit={onSubmit}> */}
+      <Form noValidate validated={!displayName} onSubmit={onSubmit}>
         <Form.Group as={Row} className="mb-3">
           <Form.Label column xs="3">
             이메일
@@ -185,24 +185,24 @@ const Profile = () => {
               required
               maxLength={30}
               minLength={4}
-              isValid={
-                isDisplayNameEditable && displayName !== user.displayName
-                  ? isValid
-                  : null
-              }
-              isInvalid={isDisplayNameEditable ? !isValid : null}
+              // isValid={
+              //   isDisplayNameEditable && displayName !== user.displayName
+              //     ? isValid
+              //     : null
+              // }
+              isInvalid={isDisplayNameEditable ? !displayName : null}
               readOnly={!isDisplayNameEditable}
               value={displayName}
               onChange={onChange}
             />
-            <Form.Control.Feedback type="valid">
+            {/* <Form.Control.Feedback type="valid">
               멋진 닉네임이네요!
             </Form.Control.Feedback>
             <Form.Control.Feedback type="invalid">
               <li>알파벳 소문자, 대문자, _, 숫자만 사용할 수 있어요.</li>
               <li>알파벳으로 시작해야 해요.</li>
               <li>최소 4글자 이상 입력해주세요.</li>
-            </Form.Control.Feedback>
+            </Form.Control.Feedback> */}
           </Col>
           <Col xs="2" className={`ps-0 pe-0 ${styles.Center}`}>
             <Button
@@ -217,7 +217,7 @@ const Profile = () => {
               }
               name="displayName"
               disabled={
-                displayNameEditLoading || displayName === "" || !isValid
+                displayNameEditLoading || displayName === "" // || !isValid
               }
             >
               {isDisplayNameEditable ? (
