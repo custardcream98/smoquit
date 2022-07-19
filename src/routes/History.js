@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { ButtonGroup, Button } from "react-bootstrap";
+import { ButtonGroup, Button, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import HistoricalCampaignCard from "components/HistoricalCampaignCard";
 import styles from "./History.module.css";
 
@@ -54,9 +55,13 @@ const History = () => {
         </ButtonGroup>
       </div>
 
-      {campaigns.map((campaign) => (
-        <HistoricalCampaignCard key={campaign.startsAt} campaign={campaign} />
-      ))}
+      {campaigns.length !== 0 ? (
+        campaigns.map((campaign) => (
+          <HistoricalCampaignCard key={campaign.startsAt} campaign={campaign} />
+        ))
+      ) : (
+        <h3 className="mt-4">아직 도전하지 않았네요!</h3>
+      )}
     </>
   );
 };

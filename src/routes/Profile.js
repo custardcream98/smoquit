@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setProfile } from "store/actions/profileAction";
+import { setCampaigns } from "store/actions/campaignsAction";
 import {
   Button,
   Form,
@@ -20,11 +21,16 @@ import {
   DOC_CAMPAIGNS,
 } from "firebaseSetup/docNames";
 import WithdrawalModal from "components/WithdrawalModal";
+import styles from "./Profile.module.css";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onLogOutClick = () => {
-    fireAuth.signOut();
+    fireAuth.signOut().then(() => {
+      dispatch(setCampaigns({ campaigns: [] }));
+      dispatch(setProfile({}));
+    });
     navigate("/", { replace: true });
   };
 
@@ -37,7 +43,7 @@ const Profile = () => {
   };
 
   const user = fireAuth.currentUser;
-  const dispatch = useDispatch();
+
   const profile = useSelector((state) => state.profile);
 
   const [isDisplayNameEditable, setIsDisplayNameEditable] = useState(false);
@@ -168,7 +174,7 @@ const Profile = () => {
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row} className="mb-3">
+        <Form.Group as={Row} className={`mb-3 ${styles.InputLine}`}>
           <Form.Label column xs="3">
             닉네임
           </Form.Label>
@@ -198,8 +204,9 @@ const Profile = () => {
               <li>최소 4글자 이상 입력해주세요.</li>
             </Form.Control.Feedback>
           </Col>
-          <Col xs="2" className="ps-0 pe-0">
+          <Col xs="2" className={`ps-0 pe-0 ${styles.Center}`}>
             <Button
+              size="sm"
               type="submit"
               onSubmit={onSubmit}
               onClick={onClick}
@@ -238,7 +245,7 @@ const Profile = () => {
           </Col>
         </Form.Group>
 
-        <Form.Group as={Row} className="mb-4">
+        <Form.Group as={Row} className={`mb-4 ${styles.InputLine}`}>
           <Form.Label column xs="6">
             하루에 피우는 담배 개피 수
           </Form.Label>
@@ -257,8 +264,9 @@ const Profile = () => {
               <li>최소 1개피 이상으로 지정해주세요.</li>
             </Form.Control.Feedback>
           </Col>
-          <Col xs="2" className="ps-0 pe-0">
+          <Col xs="2" className={`ps-0 pe-0 ${styles.Center}`}>
             <Button
+              size="sm"
               type="submit"
               onSubmit={onSubmit}
               onClick={onClick}

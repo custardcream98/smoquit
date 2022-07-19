@@ -11,3 +11,36 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.FormBox {
+    /* display: inline-flex; */
+    height: 200px;
+    /* justify-content: end;
+    align-items: flex-end; */
+}
+
+
+.FormBoxBtn {
+    display: flex;
+    height: 40px;
+    margin-top: 0.5rem;
+    justify-content: end;
+}
+
+.FormBoxBtn, .FormBox
+{
+    width: 350px;
+}
+
+.Btn {
+    width: 200px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.Center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

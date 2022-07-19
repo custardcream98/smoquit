@@ -14,4 +14,8 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 export const fireAuth = getAuth();
+// export const refreshAuth = () => {
+//   fireAuth = getAuth();
+//   fireAuth.updateCurrentUser
+// };
 export const fireStore = getFirestore();

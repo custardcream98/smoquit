@@ -57,7 +57,6 @@ const LeaderBoard = () => {
 
   useEffect(() => {
     const now = Date.now();
-    console.log(orderByStartsAt);
     let campaignData = orderByStartsAt
       .map((campaign) => ({
         duration: now - campaign.startsAt,

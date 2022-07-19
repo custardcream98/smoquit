@@ -16,7 +16,7 @@ const CampaignHistory = ({ campaigns }) => {
   useEffect(() => {
     let timeSum = 0;
     campaigns.forEach((campaign) => {
-      const { duration } = campaign.data();
+      const { duration } = campaign;
       timeSum += duration;
     });
     setAggTime(timeSum);

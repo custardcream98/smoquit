@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
-import { AppLogoWithTitle } from "./Logo";
+import { AppLogo, AppTitle } from "./Logo";
 import styles from "./Navigation.module.css";
 
 const Navigation = () => {
   return (
     <Navbar bg="white" className="pt-1 pb-1">
       <Navbar.Brand className="d-flex align-items-center mb-0 ms-3">
-        <AppLogoWithTitle />
+        <AppLogo size={30} />
+        <AppTitle style={{ fontSize: "1rem" }} />
       </Navbar.Brand>
       <Nav className="ms-auto me-2">
         <Nav.Link as={Link} to="/" className={styles.NavBtn}>
