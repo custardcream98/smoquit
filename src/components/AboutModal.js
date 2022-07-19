@@ -48,6 +48,10 @@ const AboutModal = ({ show, handleClose }) => {
               <strong>Github</strong>
             </a>
             <br></br>
+            <a href="https://github.com/custardcream98/smoquit" target="_blank">
+              <strong>Github(Repo)</strong>
+            </a>
+            <br></br>
             <a
               href="https://www.linkedin.com/in/shi-woo-park-668b33147"
               target="_blank"
