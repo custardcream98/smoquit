@@ -1,6 +1,8 @@
 # #노담이면\_좋겠어 Smoquit
 
-매 번 금연을 도전은 하는데 동기부여가 없어 실패하는 사람들을 위한 금연 카운터입니다.
+<img src="./img/login_now.gif" width="180"> <img src="./img/create_campaign_now.gif" width="180"> <img src="./img/giveup_campaign_now.gif" width="180"> <img src="./img/campaign_history.gif" width="180"> <img src="./img/change_profile.gif" width="180"> <img src="./img/leaderboard.gif" width="180">
+
+매 번 금연을 도전은 하는데 동기부여가 없어 실패하는 사람들을 위한 **금연 카운터**입니다.
 
 [서비스 링크 🔗](https://custardcream98.github.io/smoquit/)
 
