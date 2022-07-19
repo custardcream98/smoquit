@@ -25,6 +25,7 @@ const CreateCampaign = () => {
     event.preventDefault();
     setIsSubmitted(true);
     let newCampaign = {
+      uid: profile.uid,
       userName: profile.displayName,
       name: name,
       startsAt: Date.now(),

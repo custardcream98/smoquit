@@ -64,7 +64,7 @@ const LeaderBoard = () => {
     <div>
       {leaderboardData.map((campaign, index) => (
         <LeaderBoardCard
-          key={`${campaign.userName}${campaign.startsAt}`}
+          key={`${campaign.uid}${campaign.startsAt}`}
           campaign={campaign}
           rank={index + 1}
         />

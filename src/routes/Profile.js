@@ -231,7 +231,6 @@ const Profile = () => {
                       aria-hidden="true"
                     />
                     <span className="visually-hidden">Loading...</span>
-                    저장
                   </>
                 ) : displayName !== user.displayName ? (
                   "저장"
@@ -289,7 +288,6 @@ const Profile = () => {
                       aria-hidden="true"
                     />
                     <span className="visually-hidden">Loading...</span>
-                    저장
                   </>
                 ) : cigPerDay !== profile.cigPerDay ? (
                   "저장"

@@ -34,6 +34,11 @@ const LeaderBoardCard = ({ campaign, rank }) => {
               도전중
             </Badge>
           ) : null}
+          {campaign.uid === fireAuth.currentUser.uid ? (
+            <Badge bg="success" className="ms-2">
+              내 기록
+            </Badge>
+          ) : null}
         </Card.Title>
         <Card.Text className={`${styles.ItemTime}`}>
           {date2str(new Date(campaign.startsAt))} →{" "}
