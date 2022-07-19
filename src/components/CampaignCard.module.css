@@ -1,6 +1,7 @@
 .AttempCount {
     font-weight: 500;
-    font-size: calc(0.2rem + 0.9vw);
+    font-size: 0.3rem;
+
 }
 
 .CampaignTitle {

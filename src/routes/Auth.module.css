@@ -3,7 +3,7 @@
 }
 
 .Subtitle {
-    font-size: 1rem;
+    font-size: 4vw;
     font-weight: 400;
     /* color: #0E6DFD; */
     background: linear-gradient(to right, #68dd7e, #0E6DFD);
@@ -26,7 +26,7 @@
 
 .FormBoxBtn, .FormBox
 {
-    width: 350px;
+    width: 70vw;
 }
 
 .Btn {
