@@ -49,10 +49,11 @@ const LeaderBoard = () => {
   useEffect(() => {
     const now = Date.now();
     let campaignData = orderByStartsAt
-      .map((campaign) => ({
-        duration: now - campaign.startsAt,
-        ...campaign,
-      }))
+      .map((campaign) => {
+        let campaignNew = campaign;
+        campaignNew["duration"] = now - campaign.startsAt;
+        return campaignNew;
+      })
       .concat(orderByDuration);
 
     setLeaderboardData((priv) =>
