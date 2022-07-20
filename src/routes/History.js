@@ -58,7 +58,7 @@ const History = () => {
         </ButtonGroup>
       </div>
 
-      {campaigns.length !== 0 ? (
+      {campaigns?.length ? (
         campaigns.map((campaign) => (
           <HistoricalCampaignCard key={campaign.startsAt} campaign={campaign} />
         ))

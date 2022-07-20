@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <div>
-      {campaigns.length !== 0 ? (
+      {campaigns?.length ? (
         campaigns[0].endsAt === 0 ? (
           <CampaignCard
             key={campaigns[0].startsAt}

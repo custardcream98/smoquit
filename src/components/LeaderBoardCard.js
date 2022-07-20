@@ -44,7 +44,7 @@ const LeaderBoardCard = ({ campaign, rank }) => {
           </Badge>
 
           {campaign.uid === fireAuth.currentUser.uid ? (
-            <Badge bg="success" className="ms-2">
+            <Badge bg="primary" className="ms-2">
               내 기록
             </Badge>
           ) : null}
