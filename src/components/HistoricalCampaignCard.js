@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Card, Badge } from "react-bootstrap";
-import { date2str, timeDelta2str } from "core";
+import { ATTEND_INTERVAL, date2str, timeDelta2str } from "core";
 import styles from "./HistoricalCampaignCard.module.css";
 
 const HistoricalCampaignCard = ({ campaign }) => {
-  const [timer, setTimer] = useState(Date.now() - campaign.startsAt);
-
   const isOnGoing = campaign.endsAt == 0;
+  const isPending = Date.now() - campaign.lastAttend > ATTEND_INTERVAL;
+
+  const [timer, setTimer] = useState(
+    !isPending
+      ? campaign.duration + Date.now() - campaign.lastAttend
+      : campaign.duration + ATTEND_INTERVAL
+  );
+
   useEffect(() => {
     let countUp;
-    if (isOnGoing) {
+    if (isOnGoing && !isPending) {
       countUp = setInterval(() => {
-        setTimer(Date.now() - campaign.startsAt);
+        setTimer(campaign.duration + Date.now() - campaign.lastAttend);
       }, 1000);
     }
 
@@ -23,11 +29,12 @@ const HistoricalCampaignCard = ({ campaign }) => {
       <Card.Body>
         <Card.Title className={`mb-1 ${styles.ItemTitle}`}>
           {campaign.name}
-          {isOnGoing ? (
-            <Badge bg="success" className="ms-2">
-              도전중
-            </Badge>
-          ) : null}
+          <Badge
+            bg={isOnGoing && !isPending ? "success" : "danger"}
+            className="ms-2"
+          >
+            {isOnGoing ? (!isPending ? "도전중" : "출첵 필요") : "포기"}
+          </Badge>
           {campaign.rank === 1 ? (
             <Badge bg="primary" className="ms-2">
               최고기록

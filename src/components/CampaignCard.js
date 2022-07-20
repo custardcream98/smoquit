@@ -2,25 +2,69 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Card, Badge, ListGroup } from "react-bootstrap";
+import { doc, updateDoc } from "firebase/firestore";
+import { fireStore } from "firebaseSetup";
+import { DOC_CAMPAIGNS_BY_USER, DOC_CAMPAIGNS } from "firebaseSetup/docNames";
 import timeDelta2str from "core/timeDelta2str";
 import * as constants from "core/constants";
 import CampaignGiveupModal from "components/CampaignGiveupModal";
+import AttendModal from "components/AttendModal";
 import styles from "./CampaignCard.module.css";
 
-const CampaignCard = ({ name, attempCount, startsAt }) => {
-  const [timer, setTimer] = useState(Date.now() - startsAt);
-  const [cigNum, setCigNum] = useState(0);
-
+const CampaignCard = ({
+  name,
+  attempCount,
+  startsAt,
+  lastAttend,
+  duration,
+}) => {
   const profile = useSelector((state) => state.profile);
+  const [timer, setTimer] = useState(
+    Date.now() - lastAttend < constants.ATTEND_INTERVAL
+      ? duration + Date.now() - lastAttend
+      : duration + constants.ATTEND_INTERVAL
+  );
+  const [leftAttendTime, setLeftAttendTime] = useState(
+    constants.ATTEND_INTERVAL - (Date.now() - lastAttend)
+  );
+  const [cigNum, setCigNum] = useState(
+    (Date.now() - lastAttend < constants.ATTEND_INTERVAL
+      ? duration + Date.now() - lastAttend
+      : duration + constants.ATTEND_INTERVAL) /
+      (86400000 / profile.cigPerDay)
+  );
+  const [noAttend, setNoAttend] = useState(false);
 
   useEffect(() => {
-    const countUp = setInterval(() => {
-      setTimer(Date.now() - startsAt);
-    }, 1000);
+    if (leftAttendTime > 0) {
+      const countUp = setInterval(() => {
+        setTimer(duration + Date.now() - lastAttend);
+      }, 1000);
 
-    setCigNum(timer / (86400000 / profile.cigPerDay));
+      setCigNum(
+        (duration + (Date.now() - lastAttend)) / (86400000 / profile.cigPerDay)
+      );
+      setLeftAttendTime(constants.ATTEND_INTERVAL - (Date.now() - lastAttend));
+      setNoAttend(false);
 
-    return () => clearInterval(countUp);
+      return () => clearInterval(countUp);
+    } else {
+      setNoAttend(true);
+
+      // if ()
+
+      // const campaignDocRef = doc(
+      //   fireStore,
+      //   DOC_CAMPAIGNS_BY_USER,
+      //   profile.uid,
+      //   DOC_CAMPAIGNS,
+      //   `${startsAt.getTime()}`
+      // );
+
+      // updateDoc(campaignDocRef, {
+      //   duration: duration + constants.ATTEND_INTERVAL,
+      // });
+    }
   }, [timer]);
 
   return (
@@ -33,7 +77,7 @@ const CampaignCard = ({ name, attempCount, startsAt }) => {
             pill
             className="d-flex align-items-center justify-content-between"
           >
-            진행중
+            {!noAttend ? "진행중" : "출석 필요"}
             <Badge
               bg="light"
               className={`${styles.AttempCount} text-primary ms-1`}
@@ -71,7 +115,23 @@ const CampaignCard = ({ name, attempCount, startsAt }) => {
           만큼 더 살 수 있게 됐어요
         </ListGroup.Item>
       </ListGroup>
-      <CampaignGiveupModal startsAt={startsAt} />
+      <div className="d-flex justify-content-between">
+        <CampaignGiveupModal
+          startsAt={startsAt}
+          lastAttend={lastAttend}
+          leftAttendTime={leftAttendTime}
+          duration={duration}
+        />
+        <AttendModal
+          startsAt={startsAt}
+          noAttend={noAttend}
+          lastAttend={lastAttend}
+          leftAttendTime={leftAttendTime}
+          duration={duration}
+          setLeftAttendTime={setLeftAttendTime}
+          setTimer={setTimer}
+        />
+      </div>
     </>
   );
 };
@@ -80,6 +140,7 @@ CampaignCard.propTypes = {
   name: PropTypes.string.isRequired,
   attempCount: PropTypes.number.isRequired,
   startsAt: PropTypes.instanceOf(Date).isRequired,
+  lastAttend: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default CampaignCard;

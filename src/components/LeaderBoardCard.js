@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { fireAuth } from "firebaseSetup";
 import { Card, Badge } from "react-bootstrap";
-import { date2str, timeDelta2str } from "core";
+import { ATTEND_INTERVAL, date2str, timeDelta2str } from "core";
 import styles from "./LeaderBoardCard.module.css";
 
 const LeaderBoardCard = ({ campaign, rank }) => {
-  const [timer, setTimer] = useState(Date.now() - campaign.startsAt);
-
   const isOnGoing = campaign.endsAt === 0;
+  const isPending = Date.now() - campaign.lastAttend > ATTEND_INTERVAL;
+
+  const [timer, setTimer] = useState(
+    !isPending
+      ? campaign.duration + Date.now() - campaign.lastAttend
+      : campaign.duration + ATTEND_INTERVAL
+  );
+
   useEffect(() => {
     let countUp;
-    if (isOnGoing) {
+    if (isOnGoing && !isPending) {
       countUp = setInterval(() => {
-        setTimer(Date.now() - campaign.startsAt);
+        setTimer(campaign.duration + Date.now() - campaign.lastAttend);
       }, 1000);
     }
 
@@ -29,11 +35,14 @@ const LeaderBoardCard = ({ campaign, rank }) => {
               {rank}위
             </Badge>
           ) : null}
-          {isOnGoing ? (
-            <Badge bg="success" className="ms-2">
-              도전중
-            </Badge>
-          ) : null}
+
+          <Badge
+            bg={isOnGoing && !isPending ? "success" : "danger"}
+            className="ms-2"
+          >
+            {isOnGoing ? (!isPending ? "도전중" : "출첵 필요") : "포기"}
+          </Badge>
+
           {campaign.uid === fireAuth.currentUser.uid ? (
             <Badge bg="success" className="ms-2">
               내 기록
@@ -45,9 +54,7 @@ const LeaderBoardCard = ({ campaign, rank }) => {
           {isOnGoing ? null : date2str(new Date(campaign.endsAt)) + " 까지"}
         </Card.Text>
         <Card.Text className="mt-2">
-          {isOnGoing
-            ? timeDelta2str(new Date(timer))
-            : timeDelta2str(new Date(campaign.duration))}
+          {isOnGoing ? timeDelta2str(timer) : timeDelta2str(campaign.duration)}
         </Card.Text>
       </Card.Body>
     </Card>

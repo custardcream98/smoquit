@@ -4,6 +4,7 @@ import { ButtonGroup, Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import HistoricalCampaignCard from "components/HistoricalCampaignCard";
 import styles from "./History.module.css";
+import { ATTEND_INTERVAL } from "core";
 
 const History = () => {
   const campaignsStore = useSelector((state) => state.campaigns);
@@ -15,7 +16,9 @@ const History = () => {
         .map((campaign) => ({
           duration:
             campaign.endsAt === 0
-              ? Date.now() - campaign.startsAt
+              ? ATTEND_INTERVAL > Date.now() - campaign.lastAttend
+                ? campaign.duration + (Date.now() - campaign.lastAttend)
+                : campaign.duration + ATTEND_INTERVAL
               : campaign.duration,
           ...campaign,
         }))

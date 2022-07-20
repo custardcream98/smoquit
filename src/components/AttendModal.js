@@ -5,13 +5,16 @@ import { Button, Modal } from "react-bootstrap";
 import { doc, updateDoc } from "firebase/firestore";
 import { fireStore } from "firebaseSetup";
 import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
-import { ATTEND_INTERVAL } from "core";
+import { ATTEND_INTERVAL, timeDelta2str } from "core";
 
-const CampaignGiveupModal = ({
+const AttendModal = ({
   startsAt,
-  lastAttend,
+  noAttend,
   leftAttendTime,
   duration,
+  lastAttend,
+  setLeftAttendTime,
+  setTimer,
 }) => {
   const [show, setShow] = useState(false);
   const profile = useSelector((state) => state.profile);
@@ -28,42 +31,38 @@ const CampaignGiveupModal = ({
       `${startsAt.getTime()}`
     );
 
-    const now = Date.now();
-
     await updateDoc(campaignDocRef, {
-      endsAt: leftAttendTime > 0 ? now : lastAttend,
       duration:
-        leftAttendTime > 0
-          ? now - lastAttend + duration
-          : duration + ATTEND_INTERVAL,
+        duration +
+        (leftAttendTime > 0 ? Date.now() - lastAttend : ATTEND_INTERVAL),
+      lastAttend: Date.now(),
     });
+    setTimer(
+      duration +
+        (leftAttendTime > 0 ? Date.now() - lastAttend : ATTEND_INTERVAL + 1)
+    );
+    setLeftAttendTime(ATTEND_INTERVAL);
+
+    handleClose();
   };
 
   return (
     <>
-      <Button
-        variant="outline-danger"
-        size="sm"
-        onClick={handleShow}
-        className="mt-3"
-      >
-        포기하기
+      <Button variant="primary" size="sm" onClick={handleShow} className="mt-3">
+        {noAttend ? (
+          <strong>출첵할 시간이에요! ⏰</strong>
+        ) : (
+          "노담타임 남은 시간 ⏰ " + timeDelta2str(leftAttendTime)
+        )}
       </Button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>정말 포기할거에요? 😢</Modal.Title>
+          <Modal.Title>매일 매일 노담 출첵 ✅</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          흡연 욕구가 시작되는 <strong>첫 5분</strong>을 잘 이겨내면 금연에
-          성공할 확률이 크게 높아져요. 우리 조금만 더 버텨봐요!
-        </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            참자 참아!!!
-          </Button>
-          <Button variant="outline-danger" onClick={onClick}>
-            못하겠어요...
+          <Button variant="primary" onClick={onClick}>
+            오늘도 #노담 🚭
           </Button>
         </Modal.Footer>
       </Modal>
@@ -71,8 +70,9 @@ const CampaignGiveupModal = ({
   );
 };
 
-CampaignGiveupModal.propTypes = {
+AttendModal.propTypes = {
   startsAt: PropTypes.instanceOf(Date).isRequired,
+  noAttend: PropTypes.bool.isRequired,
 };
 
-export default CampaignGiveupModal;
+export default AttendModal;

@@ -30,6 +30,8 @@ const Home = () => {
             name={campaigns[0].name}
             attempCount={campaigns.length + 1}
             startsAt={new Date(campaigns[0].startsAt)}
+            lastAttend={new Date(campaigns[0].lastAttend)}
+            duration={campaigns[0].duration}
           />
         ) : (
           <>

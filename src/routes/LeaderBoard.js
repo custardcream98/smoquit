@@ -10,6 +10,7 @@ import {
 import { fireStore } from "firebaseSetup";
 import { DOC_CAMPAIGNS } from "firebaseSetup/docNames";
 import LeaderBoardCard from "components/LeaderBoardCard";
+import { ATTEND_INTERVAL } from "core";
 
 const LeaderBoard = () => {
   // // 전체 데이터 가져와서 front에서 계산해야 함
@@ -49,11 +50,14 @@ const LeaderBoard = () => {
   useEffect(() => {
     const now = Date.now();
     let campaignData = orderByStartsAt
-      .map((campaign) => {
-        let campaignNew = campaign;
-        campaignNew["duration"] = now - campaign.startsAt;
-        return campaignNew;
-      })
+      // .map((campaign) => {
+      //   let campaignNew = campaign;
+      //   campaignNew["duration"] =
+      //     now - campaign.lastAttend < ATTEND_INTERVAL
+      //       ? campaign.duration + now - campaign.lastAttend
+      //       : campaign.duration;
+      //   return campaignNew;
+      // })
       .concat(orderByDuration);
 
     setLeaderboardData((priv) =>

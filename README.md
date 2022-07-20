@@ -38,13 +38,34 @@
         - 📄 **displayName**: 닉네임 (리더보드용)
           > firebase에서는 uid를 이용해 닉네임을 가져올 수 없어 이렇게 저장합니다.
         - 📄 **name**: 캠페인 이름(간단한 메모)
-        - 📄 **startsAt**: 캠페인 시작 시각(int, Timestamp in millisecounds)
-        - 📄 **endsAt**: 캠페인 종료 시각, 각 캠페인 포기시에 set(int, Timestamp in millisecounds)
-        - 📄 **duration**: 캠페인 지속 시간, 각 캠페인 포기시에 set(int, Timestamp in millisecounds)
+        - 📄 **startsAt**: 캠페인 시작 시각(int, Timestamp in milliseconds)
+        - 📄 **endsAt**: 캠페인 종료 시각, 각 캠페인 포기시에 set(int, Timestamp in milliseconds)
+        - 📄 **duration**: 캠페인 지속 시간, 각 캠페인 포기시에 set(int, Timestamp in milliseconds)
+        - 📄 **lastAttend**: 지난 출첵 시간 (int, Timestamp in milliseconds)
 
 - 💼 **profile**: user에 추가로 저장해야 하는 정보
   - 📙 **uid**
     - 📄 **sigPerDay**: 하루에 몇개피 펴왔는지에 대한 정보, 메인 화면에서 필요한 정보 계산에 사용
+
+---
+
+## Duration Logic
+
+금연 시간을 계산할 때 단순히 금연 시작을 누르고 경과 시간만을 사용하면 사용자의 금연 의지가 증명이 안되므로, 매 24시간마다 금연 시간 경과를 중지합니다.
+
+이 기능 구현을 위해 아래의 로직을 짰습니다.
+
+### Campaign Logic
+
+1. 금연 시작시 `lastAttend`를 금연 시작 시각으로 저장
+2. `CampaignCard.js`에서 매 초 `lastAttend`와 현재 시각을 비교합니다.
+   - 현재 시각이 `lastAttend` + 1일을 지났다면 타이머를 멈춥니다.
+3. 금연 포기 시, `lastAttend`와 현재 시각을 비교합니다.
+   - 현재 시각이 `lastAttend` + 1일을 지났다면, `duration`에 1일을 더합니다.
+   - 현재 시각이 `lastAttend` + 1일을 지나지 않았다면, `duration`에 현재 시각과 `lastAttend`의 차이를 더합니다.
+4. 출석 체크시 `lastAttend`와 현재 시각을 비교합니다.
+   - 현재 시각이 `lastAttend` + 1일을 지났다면, `duration`에 1일을 더하고, `lastAttend`를 현재 시각으로 갱신합니다.
+   - 현재 시각이 `lastAttend` + 1일을 지나지 않았다면, `duration`에 현재 시각과 `lastAttend`의 차이를 더하고, `lastAttend`를 현재 시각으로 갱신합니다.
 
 ---
 
