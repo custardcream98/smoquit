@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import { FaHome, FaUserAlt, FaHistory } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";
-import { AppLogo, AppTitle } from "components/Logo";
+import { AppLogo, AppTitle } from "components/Common/Logo";
 import AboutModal from "./AboutModal";
-import styles from "./Navigation.module.css";
+import styles from "styles/Navigation.module.css";
 
 const Navigation = () => {
   const [showAboutModal, setShowAboutModal] = useState(false);

@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Modal, Button } from "react-bootstrap";
-import { AppLogo, AppTitle } from "components/Logo";
-import styles from "./AboutModal.module.css";
+import { Modal } from "react-bootstrap";
+import { AppLogo, AppTitle } from "components/Common/Logo";
+import styles from "styles/AboutModal.module.css";
 
 const AboutModal = ({ show, handleClose }) => {
   return (

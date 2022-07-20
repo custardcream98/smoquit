@@ -9,8 +9,7 @@ import {
 } from "firebase/firestore";
 import { fireStore } from "firebaseSetup";
 import { DOC_CAMPAIGNS } from "firebaseSetup/docNames";
-import LeaderBoardCard from "components/LeaderBoardCard";
-import { ATTEND_INTERVAL } from "core";
+import LeaderBoardCard from "components/LeaderBoard/LeaderBoardCard";
 
 const LeaderBoard = () => {
   // // 전체 데이터 가져와서 front에서 계산해야 함

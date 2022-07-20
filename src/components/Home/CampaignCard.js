@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import { Card, Badge, ListGroup } from "react-bootstrap";
 import timeDelta2str from "core/timeDelta2str";
 import * as constants from "core/constants";
-import CampaignGiveupModal from "components/CampaignGiveupModal";
-import AttendModal from "components/AttendModal";
-import styles from "./CampaignCard.module.css";
+import CampaignGiveupModal from "components/Home/CampaignGiveupModal";
+import AttendModal from "components/Home/AttendModal";
+import styles from "styles/CampaignCard.module.css";
 
 const CampaignCard = ({
   name,

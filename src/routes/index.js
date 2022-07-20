@@ -12,7 +12,7 @@ import Profile from "routes/Profile";
 import CreateCampaign from "routes/CreateCampaign";
 import LeaderBoard from "routes/LeaderBoard";
 import History from "routes/History";
-import Navigation from "components/Navigation";
+import Navigation from "components/Nav/Navigation";
 
 const AppRouter = ({ isLoggedIn }) => {
   return (

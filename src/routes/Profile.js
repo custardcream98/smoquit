@@ -20,8 +20,8 @@ import {
   DOC_CAMPAIGNS_BY_USER,
   DOC_CAMPAIGNS,
 } from "firebaseSetup/docNames";
-import WithdrawalModal from "components/WithdrawalModal";
-import styles from "./Profile.module.css";
+import WithdrawalModal from "components/Profile/WithdrawalModal";
+import styles from "styles/Profile.module.css";
 
 const Profile = () => {
   const navigate = useNavigate();

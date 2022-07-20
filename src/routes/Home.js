@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import CampaignCard from "components/CampaignCard";
-import CampaignHistory from "components/CampaignHistory";
+import CampaignCard from "components/Home/CampaignCard";
+import CampaignHistory from "components/Home/CampaignHistory";
 
 const Home = () => {
   const profile = useSelector((state) => state.profile);

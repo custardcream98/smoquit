@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { ButtonGroup, Button, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import HistoricalCampaignCard from "components/HistoricalCampaignCard";
-import styles from "./History.module.css";
+import { ButtonGroup, Button } from "react-bootstrap";
+import HistoricalCampaignCard from "components/History/HistoricalCampaignCard";
+import styles from "styles/History.module.css";
 import { ATTEND_INTERVAL } from "core";
 
 const History = () => {

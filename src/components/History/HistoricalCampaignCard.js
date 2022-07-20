@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Badge } from "react-bootstrap";
 import { ATTEND_INTERVAL, date2str, timeDelta2str } from "core";
-import styles from "./HistoricalCampaignCard.module.css";
+import styles from "styles/HistoricalCampaignCard.module.css";
 
 const HistoricalCampaignCard = ({ campaign }) => {
   const isOnGoing = campaign.endsAt == 0;

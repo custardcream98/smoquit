@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import logo from "static/logo.png";
-import styles from "./Logo.module.css";
+import styles from "styles/Logo.module.css";
 
 export const AppLogo = ({ className = "me-2", size = 35 }) => (
   <img

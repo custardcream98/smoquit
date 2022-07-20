@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fireAuth } from "firebaseSetup";
 import { Card, Badge } from "react-bootstrap";
 import { ATTEND_INTERVAL, date2str, timeDelta2str } from "core";
-import styles from "./LeaderBoardCard.module.css";
+import styles from "styles/LeaderBoardCard.module.css";
 
 const LeaderBoardCard = ({ campaign, rank }) => {
   const isOnGoing = campaign.endsAt === 0;

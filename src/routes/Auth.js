@@ -18,11 +18,14 @@ import {
 import { setDoc, doc } from "firebase/firestore";
 import { fireAuth, fireStore } from "firebaseSetup";
 import { DOC_PROFILE } from "firebaseSetup/docNames";
-import { WrongPasswordModal, AlreadyInUseModal } from "components/AuthModal";
-import { AppTitle, AppLogo } from "components/Logo";
-import AuthNavigation from "components/AuthNavigation";
+import {
+  WrongPasswordModal,
+  AlreadyInUseModal,
+} from "components/Auth/AuthModal";
+import { AppTitle, AppLogo } from "components/Common/Logo";
+import AuthNavigation from "components/Auth/AuthNavigation";
 import Google from "static/Google.webp";
-import styles from "./Auth.module.css";
+import styles from "styles/Auth.module.css";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
