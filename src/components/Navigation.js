@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
+import { FaHome, FaUserAlt, FaHistory } from "react-icons/fa";
+import { MdLeaderboard } from "react-icons/md";
 import { AppLogo, AppTitle } from "components/Logo";
 import AboutModal from "./AboutModal";
 import styles from "./Navigation.module.css";
@@ -22,16 +24,16 @@ const Navigation = () => {
         </Navbar.Brand>
         <Nav className="ms-auto me-2">
           <Nav.Link as={Link} to="/" className={styles.NavBtn}>
-            홈
+            <FaHome />
           </Nav.Link>
           <Nav.Link as={Link} to="/history" className={styles.NavBtn}>
-            도전내역
+            <FaHistory />
           </Nav.Link>
           <Nav.Link as={Link} to="/profile" className={styles.NavBtn}>
-            프로필
+            <FaUserAlt />
           </Nav.Link>
           <Nav.Link as={Link} to="/leaderboard" className={styles.NavBtn}>
-            리더보드
+            <MdLeaderboard />
           </Nav.Link>
         </Nav>
       </Navbar>
