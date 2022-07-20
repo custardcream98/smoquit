@@ -22,6 +22,7 @@ import {
 } from "firebaseSetup/docNames";
 import WithdrawalModal from "components/Profile/WithdrawalModal";
 import styles from "styles/Profile.module.css";
+import { PATH_HOME } from "core";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Profile = () => {
       dispatch(setCampaigns({ campaigns: [] }));
       dispatch(setProfile({}));
     });
-    navigate("/", { replace: true });
+    navigate(PATH_HOME, { replace: true });
   };
 
   const [isWithdrawalClicked, setIsWithdrawalClicked] = useState(false);
@@ -39,7 +40,7 @@ const Profile = () => {
     setIsWithdrawalClicked((priv) => !priv);
   const onWithdrawalClick = () => {
     deleteUser(fireAuth.currentUser);
-    navigate("/", { replace: true });
+    navigate(PATH_HOME, { replace: true });
   };
 
   const user = fireAuth.currentUser;

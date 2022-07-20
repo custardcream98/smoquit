@@ -5,6 +5,7 @@ import { setDoc, doc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { fireStore } from "firebaseSetup";
 import { DOC_CAMPAIGNS, DOC_CAMPAIGNS_BY_USER } from "firebaseSetup/docNames";
+import { PATH_HOME } from "core";
 
 const CreateCampaign = () => {
   const profile = useSelector((state) => state.profile);
@@ -46,7 +47,7 @@ const CreateCampaign = () => {
         newCampaign
       );
 
-      navigate("/", { replace: true });
+      navigate(PATH_HOME, { replace: true });
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +89,7 @@ const CreateCampaign = () => {
               <span>나도 이제 #노담! 😉</span>
             )}
           </Button>
-          <Button as={Link} to="/" variant="outline-primary">
+          <Button as={Link} to={PATH_HOME} variant="outline-primary">
             돌아가기
           </Button>
         </div>

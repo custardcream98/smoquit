@@ -4,7 +4,7 @@ import { ATTEND_INTERVAL, date2str, timeDelta2str } from "core";
 import styles from "styles/HistoricalCampaignCard.module.css";
 
 const HistoricalCampaignCard = ({ campaign }) => {
-  const isOnGoing = campaign.endsAt == 0;
+  const isOnGoing = campaign.endsAt === 0;
   const isPending = Date.now() - campaign.lastAttend > ATTEND_INTERVAL;
 
   const [timer, setTimer] = useState(
