@@ -48,11 +48,21 @@ const AttendModal = ({
 
   return (
     <>
-      <Button variant="primary" size="sm" onClick={handleShow} className="mt-3">
+      <Button
+        variant="primary"
+        size="sm"
+        onClick={handleShow}
+        className="d-flex flex-column mt-3 justify-content-center align-items-center"
+      >
         {noAttend ? (
-          <strong>출첵할 시간이에요! ⏰</strong>
+          <span>
+            <strong>출첵할 시간이에요! ⏰</strong>
+          </span>
         ) : (
-          "노담타임 남은 시간 ⏰ " + timeDelta2str(leftAttendTime)
+          <>
+            <span>노담타임 남은 시간 ⏰ </span>
+            <span>{timeDelta2str(leftAttendTime)}</span>
+          </>
         )}
       </Button>
 

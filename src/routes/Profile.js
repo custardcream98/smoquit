@@ -219,6 +219,7 @@ const Profile = () => {
               disabled={
                 displayNameEditLoading || displayName === "" // || !isValid
               }
+              className="d-flex justify-content-center align-items-center"
             >
               {isDisplayNameEditable ? (
                 displayNameEditLoading ? (
@@ -276,6 +277,7 @@ const Profile = () => {
               }
               name="cigPerDay"
               disabled={cigPerDayEditLoading || cigPerDay <= 0}
+              className="d-flex justify-content-center align-items-center"
             >
               {isCigPerDayEditable ? (
                 cigPerDayEditLoading ? (

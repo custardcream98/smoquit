@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Card, Badge, ListGroup } from "react-bootstrap";
-import { doc, updateDoc } from "firebase/firestore";
-import { fireStore } from "firebaseSetup";
-import { DOC_CAMPAIGNS_BY_USER, DOC_CAMPAIGNS } from "firebaseSetup/docNames";
 import timeDelta2str from "core/timeDelta2str";
 import * as constants from "core/constants";
 import CampaignGiveupModal from "components/CampaignGiveupModal";
@@ -50,20 +47,6 @@ const CampaignCard = ({
       return () => clearInterval(countUp);
     } else {
       setNoAttend(true);
-
-      // if ()
-
-      // const campaignDocRef = doc(
-      //   fireStore,
-      //   DOC_CAMPAIGNS_BY_USER,
-      //   profile.uid,
-      //   DOC_CAMPAIGNS,
-      //   `${startsAt.getTime()}`
-      // );
-
-      // updateDoc(campaignDocRef, {
-      //   duration: duration + constants.ATTEND_INTERVAL,
-      // });
     }
   }, [timer]);
 

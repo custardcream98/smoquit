@@ -1,6 +1,6 @@
 .AttempCount {
     font-weight: 500;
-    font-size: 0.3rem;
+    font-size: calc(0.4rem + 0.4vw);
 
 }
 
