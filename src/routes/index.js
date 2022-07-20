@@ -6,13 +6,16 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import LoadingIndicator from "components/Common/LoadingIndicator";
 import Auth from "routes/Auth";
 import Home from "routes/Home";
 import Profile from "routes/Profile";
-import CreateCampaign from "routes/CreateCampaign";
-import LeaderBoard from "routes/LeaderBoard";
-import History from "routes/History";
+import FreeBoard from "./FreeBoard";
 import Navigation from "components/Nav/Navigation";
+
+const CreateCampaign = React.lazy(() => import("routes/CreateCampaign"));
+const LeaderBoard = React.lazy(() => import("routes/LeaderBoard"));
+const History = React.lazy(() => import("routes/History"));
 
 const AppRouter = ({ isLoggedIn }) => {
   return (
@@ -23,10 +26,32 @@ const AppRouter = ({ isLoggedIn }) => {
           {isLoggedIn ? (
             <>
               <Route path="/" element={<Home />} />
-              <Route path="/leaderboard" element={<LeaderBoard />} />
+              <Route
+                path="/history"
+                element={
+                  <React.Suspense fallback={<LoadingIndicator />}>
+                    <History />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/leaderboard"
+                element={
+                  <React.Suspense fallback={<LoadingIndicator />}>
+                    <LeaderBoard />
+                  </React.Suspense>
+                }
+              />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/create" element={<CreateCampaign />} />
-              <Route path="/history" element={<History />} />
+              <Route
+                path="/create"
+                element={
+                  <React.Suspense fallback={<LoadingIndicator />}>
+                    <CreateCampaign />
+                  </React.Suspense>
+                }
+              />
+              <Route path="/freeboard" element={<FreeBoard />} />
               <Route path="/*" element={<Navigate replace to="/" />} />
             </>
           ) : (

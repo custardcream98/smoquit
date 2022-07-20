@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Spinner } from "react-bootstrap";
 import { doc, getDoc, collection, onSnapshot } from "firebase/firestore";
 import { fireAuth, fireStore } from "firebaseSetup";
 import {
@@ -11,6 +10,7 @@ import {
 import { setProfile } from "store/actions/profileAction";
 import { setCampaigns } from "store/actions/campaignsAction";
 import AppRouter from "routes";
+import LoadingIndicator from "components/Common/LoadingIndicator";
 
 const App = () => {
   const [init, setInit] = useState(false);
@@ -48,17 +48,7 @@ const App = () => {
   }, []);
   return (
     <>
-      {init ? (
-        <AppRouter isLoggedIn={isLoggedIn} />
-      ) : (
-        <div className="d-flex flex-column min-vh-100 min-vw-100">
-          <div className="d-flex flex-grow-1 justify-content-center align-items-center">
-            <Spinner as="p" animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        </div>
-      )}
+      {init ? <AppRouter isLoggedIn={isLoggedIn} /> : <LoadingIndicator />}
       {/* <footer>&copy; Smoquit {new Date().getFullYear()}</footer> */}
     </>
   );
