@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/smoquit/static/css/main.e141b415.css",
-    "main.js": "/smoquit/static/js/main.7f8e8416.js",
+    "main.css": "/smoquit/static/css/main.7f45f939.css",
+    "main.js": "/smoquit/static/js/main.55817156.js",
     "static/media/Google.webp": "/smoquit/static/media/Google.adcdb35970e6f079912e.webp",
     "index.html": "/smoquit/index.html",
-    "main.e141b415.css.map": "/smoquit/static/css/main.e141b415.css.map",
-    "main.7f8e8416.js.map": "/smoquit/static/js/main.7f8e8416.js.map"
+    "main.7f45f939.css.map": "/smoquit/static/css/main.7f45f939.css.map",
+    "main.55817156.js.map": "/smoquit/static/js/main.55817156.js.map"
   },
   "entrypoints": [
-    "static/css/main.e141b415.css",
-    "static/js/main.7f8e8416.js"
+    "static/css/main.7f45f939.css",
+    "static/js/main.55817156.js"
   ]
 }
